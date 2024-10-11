@@ -1,10 +1,12 @@
 const ModulesContent = () => {
     return (
         <div>
-            <div className="text-lg font-bold mb-2">Modules</div>
-            <div className="text-sm mb-4">
+            <div className="text-lg font-bold mb-2 text-brightBlue font-montserrat">
+                Modules
+            </div>
+            <div className="text-sm mb-4 text-darkGray font-roboto">
                 <p>Modules in Vyzon allow you to organize and reuse code:</p>
-                <pre className="bg-gray-100 p-2">
+                <pre className="bg-gray-100 p-2 text-darkGray font-roboto">
                     module Math {"{"}
                     <br />
                     &nbsp;&nbsp;def Abs(x) {"{"}
@@ -24,7 +26,7 @@ const ModulesContent = () => {
                     {"}"}
                 </pre>
                 <p>To use a function from the Math module:</p>
-                <pre className="bg-gray-100 p-2">
+                <pre className="bg-gray-100 p-2 text-darkGray font-roboto">
                     write(Math.Abs(-10)); // Output: 10
                 </pre>
             </div>

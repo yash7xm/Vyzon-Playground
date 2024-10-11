@@ -1,12 +1,14 @@
 const InstallationContent = () => {
     return (
         <div>
-            <div className="text-lg font-bold mb-2">Installation</div>
-            <div className="text-sm mb-4">
+            <div className="text-lg font-bold mb-2 text-brightBlue font-montserrat">
+                Installation
+            </div>
+            <div className="text-sm mb-4 text-darkGray font-roboto">
                 To install Vyzon, you can use npm:
                 <pre className="bg-gray-100 p-2">$ npm i vyzon</pre>
                 Follow these steps to set it up locally:
-                <ol className="list-decimal list-inside mb-4">
+                <ol className="list-decimal list-inside mb-4 text-darkGray font-roboto">
                     <li>
                         Clone the repository to your local machine using Git:
                     </li>

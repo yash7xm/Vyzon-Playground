@@ -1,20 +1,26 @@
 const DocumentationContent = () => {
     return (
         <div>
-            <div className="text-lg font-bold mb-2">Documentation</div>
-            <div className="text-sm mb-4">
-                <div className="text-bold">Variable Declarations:</div>
+            <div className="text-lg font-bold mb-2 text-brightBlue font-montserrat">
+                Documentation
+            </div>
+            <div className="text-sm mb-4 text-darkGray font-roboto">
+                <div className="text-bold text-brightBlue">
+                    Variable Declarations:
+                </div>
                 <p>
-                    Use the <code>let</code> keyword:
+                    Use the{" "}
+                    <code className="text-darkGray font-roboto">let</code>{" "}
+                    keyword:
                 </p>
-                <pre className="bg-gray-100 p-2">
+                <pre className="bg-gray-100 p-2 text-darkGray font-roboto">
                     let a; // Initialized with 0
                     <br />
                     let b = 1; // Initialized with 1
                 </pre>
 
-                <div className="text-bold">Data Types:</div>
-                <pre className="bg-gray-100 p-2">
+                <div className="text-bold text-brightBlue">Data Types:</div>
+                <pre className="bg-gray-100 p-2 text-darkGray font-roboto">
                     let a = 'Hello, World!';
                     <br />
                     let b = 10;
