@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CommandMenu } from "./commandMenu";
 import { Input } from "@/components/ui/input";
 import { MagnifyingGlassIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
+import { Link } from "react-router-dom";
 
 function Navbar() {
     const [open, setOpen] = useState(false);
@@ -26,9 +27,11 @@ function Navbar() {
             </div>
 
             <div className="flex gap-8 items-center mr-8">
-                <div className="cursor-pointer text-sm hover:underline">
-                    Documentation
-                </div>
+                <Link to="/docs/introduction">
+                    <div className="cursor-pointer text-sm hover:underline">
+                        Documentation
+                    </div>
+                </Link>
                 <div className="cursor-pointer text-sm hover:underline">
                     Playground
                 </div>

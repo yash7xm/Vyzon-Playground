@@ -1,8 +1,13 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { Link } from "react-router-dom";
 
 function Sidebar() {
-    const documentationLinks = ["Introduction", "Getting Started", "API Reference"];
+    const documentationLinks = [
+        "Introduction",
+        "Getting Started",
+        "API Reference",
+    ];
 
     return (
         <ScrollArea className="w-full h-full border py-4 px-6 rounded-md">
@@ -17,13 +22,13 @@ function Sidebar() {
 }
 
 function DocsLink({ doc }: { doc: string }) {
-    const docUrl = `/docs/${doc.replace(/\s+/g, '-').toLowerCase()}`;
+    const docUrl = `/docs/${doc.replace(/\s+/g, "-").toLowerCase()}`;
 
     return (
         <>
-            <a href={docUrl} className="text-sm text-blue-600 hover:underline">
+            <Link to={docUrl} className="text-sm text-blue-600 hover:underline">
                 {doc}
-            </a>
+            </Link>
             <Separator className="my-2" />
         </>
     );

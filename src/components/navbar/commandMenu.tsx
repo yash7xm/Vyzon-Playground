@@ -6,6 +6,7 @@ import {
     CommandItem,
     CommandList,
 } from "@/components/ui/command";
+import { Link } from "react-router-dom";
 
 interface CommandMenuProps {
     open: boolean;
@@ -19,9 +20,8 @@ export function CommandMenu({ open, setOpen }: CommandMenuProps) {
         "API Reference",
     ];
 
-    const handleNavigate = (doc: string) => {
-        const docUrl = `/docs/${doc.replace(/\s+/g, "-").toLowerCase()}`;
-        window.location.href = docUrl;
+    const handleNavigate = () => {
+        setOpen(false);
     };
 
     return (
@@ -30,15 +30,22 @@ export function CommandMenu({ open, setOpen }: CommandMenuProps) {
             <CommandList>
                 <CommandEmpty>No results found.</CommandEmpty>
                 <CommandGroup heading="Suggestions">
-                    {documentationLinks.map((doc, index) => (
-                        <CommandItem
-                            key={index}
-                            onSelect={() => handleNavigate(doc)}
-                            className="cursor-pointer"
-                        >
-                            {doc}
-                        </CommandItem>
-                    ))}
+                    {documentationLinks.map((doc, index) => {
+                        const docUrl = `/docs/${doc
+                            .replace(/\s+/g, "-")
+                            .toLowerCase()}`;
+                        return (
+                            <Link
+                                to={docUrl}
+                                key={index}
+                                onClick={() => handleNavigate()}
+                            >
+                                <CommandItem className="cursor-pointer">
+                                    {doc}
+                                </CommandItem>
+                            </Link>
+                        );
+                    })}
                 </CommandGroup>
             </CommandList>
         </CommandDialog>
