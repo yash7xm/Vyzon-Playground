@@ -8,11 +8,11 @@ function Home() {
             <div className="w-full">
                 <Navbar />
             </div>
-            <div className="w-full flex h-full gap-8">
-                <div className="w-1/3 h-full">
+            <div className="w-full flex h-full overflow-y-hidden gap-8">
+                <div className="w-1/4 h-full">
                     <Sidebar />
                 </div>
-                <div className="w-2/3 h-full">
+                <div className="w-3/4 h-full">
                     <Content />
                 </div>
             </div>

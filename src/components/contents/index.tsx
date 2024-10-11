@@ -1,6 +1,10 @@
+import { ScrollArea } from "@/components/ui/scroll-area";
+
 function Content() {
     return (
-        <div className="w-full h-full rounded-lg bg-slate-300">Content</div>
+        <ScrollArea className="w-full h-full rounded-lg border p-4">
+            
+        </ScrollArea>
     )
 }
 
