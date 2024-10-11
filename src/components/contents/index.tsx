@@ -1,5 +1,4 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "../ui/separator";
 import React, { Suspense, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -23,7 +22,7 @@ function Content() {
     }, [id]);
 
     return (
-        <ScrollArea className="w-full h-full rounded-lg border p-4">
+        <ScrollArea className="w-full h-full rounded-lg border pt-4 pl-4 pr-24 pb-2">   
             {SectionContent ? (
                 <Suspense fallback={<div>Loading...</div>}>
                     <SectionContent />
@@ -31,7 +30,6 @@ function Content() {
             ) : (
                 <div className="text-lg font-bold">Section not found.</div>
             )}
-            <Separator />
         </ScrollArea>
     );
 }
