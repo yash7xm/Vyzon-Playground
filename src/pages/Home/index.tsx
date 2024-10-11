@@ -8,7 +8,7 @@ function Home() {
             <div className="w-full">
                 <Navbar />
             </div>
-            <div className="w-full flex h-full gap-8">
+            <div className="w-full flex h-full gap-8 overflow-hidden">
                 <div className="w-1/4 h-full">
                     <Sidebar />
                 </div>

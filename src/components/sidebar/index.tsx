@@ -5,8 +5,10 @@ import { Link } from "react-router-dom";
 function Sidebar() {
     const documentationLinks = [
         "Introduction",
-        "Getting Started",
-        "API Reference",
+        "Installation",
+        "Modules",
+        "Usage",
+        "Documentation",
     ];
 
     return (
