@@ -2,9 +2,9 @@ import { Separator } from "../ui/separator";
 
 const IntroductionContent = () => {
     return (
-        <div className="p-6  rounded-lg shadow-lg">
+        <div className="p-6 rounded-lg shadow-lg">
             {/* Introduction Heading */}
-            <div className="text-4xl font-bold text-brightBlue font-montserrat mb-6 underline underline-offset-4 decoration-wavy">
+            <div className="text-4xl font-bold text-brightBlue font-montserrat mb-6">
                 Introduction
             </div>
 
@@ -43,18 +43,48 @@ const IntroductionContent = () => {
 
             <Separator className="my-4" />
 
-            {/* Use Cases Section */}
+            {/* About the Author Section */}
             <div className="mb-6">
                 <div className="text-2xl font-bold text-brightBlue font-roboto mb-4">
-                    Use Cases:
+                    About the Author:
                 </div>
-                <ul className="list-disc pl-6 text-lg text-darkGray font-roboto leading-8">
-                    <li>Web development with frontend frameworks.</li>
-                    <li>Scripting and automation tasks.</li>
-                    <li>Data analysis and manipulation.</li>
-                    <li>Game development and prototyping.</li>
-                    <li>Building APIs and backend services.</li>
-                </ul>
+                <div className="text-lg text-darkGray font-roboto leading-8">
+                    The Vyzon programming language is created by
+                    <strong className="text-emeraldGreen"> Yash Poonia </strong>
+                    . You can connect with him on social media:
+                    <ul className="list-disc pl-6">
+                        <li>
+                            <a
+                                href="[Twitter Link]"
+                                className="text-brightBlue underline"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Twitter
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="[GitHub Link]"
+                                className="text-brightBlue underline"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                GitHub
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="[LinkedIn Link]"
+                                className="text-brightBlue underline"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                LinkedIn
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
             <Separator className="my-4" />
