@@ -9,12 +9,16 @@ function Content() {
         introduction: React.lazy(() => import("../sections/introduction")),
         gettingstarted: React.lazy(() => import("../sections/getting-started")),
         usage: React.lazy(() => import("../sections/usage")),
+        variablesanddatatypes: React.lazy(
+            () => import("../sections/variables-and-datatypes")
+        ),
         documentation: React.lazy(() => import("../sections/documentation")),
         modules: React.lazy(() => import("../sections/modules")),
     };
 
     const { id } = useParams<{ id: string }>();
-    const [SectionContent, setSectionContent] = useState<React.LazyExoticComponent<React.FC> | null>(null);
+    const [SectionContent, setSectionContent] =
+        useState<React.LazyExoticComponent<React.FC> | null>(null);
 
     useEffect(() => {
         const section = sectionComponents[id as string] || null;
@@ -22,7 +26,7 @@ function Content() {
     }, [id]);
 
     return (
-        <ScrollArea className="w-full h-full rounded-lg border pt-4 pl-4 pr-24 pb-2">   
+        <ScrollArea className="w-full h-full rounded-lg border pt-4 pl-4 pr-24 pb-2">
             {SectionContent ? (
                 <Suspense fallback={<div>Loading...</div>}>
                     <SectionContent />

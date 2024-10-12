@@ -7,6 +7,7 @@ function Sidebar() {
         "Introduction",
         "Getting Started",
         "Usage",
+        "Variables and DataTypes",
         "Modules",
         "Documentation",
     ];
