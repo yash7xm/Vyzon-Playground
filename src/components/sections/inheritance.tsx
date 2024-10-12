@@ -1,5 +1,7 @@
 import Code from "../utils/code";
 import { Separator } from "../ui/separator";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const InheritanceContent = () => {
     return (
@@ -27,18 +29,21 @@ const InheritanceContent = () => {
                 To create a base class, use the <Code code="class" /> keyword.
                 Here’s an example of a base class <Code code="Animal" /> that
                 includes a constructor and a method:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    class Animal &#123;{"\n"}
-                    {"  "}def constructor(name) &#123;{"\n"}
-                    {"    "}this.name = name;{"\n"}
-                    {"  "}&#125;
-                    {"\n\n"}
-                    {"  "}def speak() &#123;{"\n"}
-                    {"    "}write(this.name + " makes a sound.");{"\n"}
-                    {"  "}&#125;
-                    {"\n"}
-                    &#125;
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`class Animal {
+  def constructor(name) {
+    this.name = name;
+  }
+
+  def speak() {
+    write(this.name + " makes a sound.");
+  }
+}`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, the <Code code="Animal" /> class has a
                     constructor that initializes the <Code code="name" />{" "}
@@ -56,18 +61,21 @@ const InheritanceContent = () => {
                 You can extend a class using the <Code code="extends" />{" "}
                 keyword. Here’s an example of a <Code code="Dog" /> class that
                 inherits from the <Code code="Animal" /> class:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    class Dog extends Animal &#123;{"\n"}
-                    {"  "}def constructor(name) &#123;{"\n"}
-                    {"    "}super(name);{"\n"}
-                    {"  "}&#125;
-                    {"\n\n"}
-                    {"  "}def speak() &#123;{"\n"}
-                    {"    "}write(this.name + " barks.");{"\n"}
-                    {"  "}&#125;
-                    {"\n"}
-                    &#125;
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`class Dog extends Animal {
+  def constructor(name) {
+    super(name);
+  }
+
+  def speak() {
+    write(this.name + " barks.");
+  }
+}`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, the <Code code="Dog" /> class extends the{" "}
                     <Code code="Animal" /> class. The constructor uses the{" "}
@@ -87,10 +95,14 @@ const InheritanceContent = () => {
             <div className="text-lg text-darkGray font-roboto leading-8 mb-6">
                 You can create an object of the <Code code="Dog" /> class and
                 call its <Code code="speak" /> method. Here’s how to do it:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    let dog = new Dog("Buddy");{"\n"}
-                    dog.speak(); // Outputs: Buddy barks.
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`let dog = new Dog("Buddy");
+dog.speak(); // Outputs: Buddy barks.`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, we create an instance of the{" "}
                     <Code code="Dog" /> class named <Code code="dog" /> and
@@ -108,21 +120,24 @@ const InheritanceContent = () => {
                 The <Code code="super" /> keyword is used to call the
                 constructor of the parent class and to access methods from a
                 parent class within a child class. Here’s an example:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    class Parent &#123;{"\n"}
-                    {"  "}def constructor() &#123;{"\n"}
-                    {"    "}write("Parent constructor");{"\n"}
-                    {"  "}&#125;
-                    {"\n"}
-                    &#125;{"\n\n"}
-                    class Child extends Parent &#123;{"\n"}
-                    {"  "}def constructor() &#123;{"\n"}
-                    {"    "}super();{"\n"}
-                    {"    "}write("Child constructor");{"\n"}
-                    {"  "}&#125;
-                    {"\n"}
-                    &#125;
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`class Parent {
+  def constructor() {
+    write("Parent constructor");
+  }
+}
+
+class Child extends Parent {
+  def constructor() {
+    super();
+    write("Child constructor");
+  }
+}`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, the <Code code="Child" /> class extends the{" "}
                     <Code code="Parent" /> class. The constructor of the{" "}
@@ -141,10 +156,14 @@ const InheritanceContent = () => {
             <div className="text-lg text-darkGray font-roboto leading-8 mb-6">
                 You can create an object of the <Code code="Child" /> class,
                 which will automatically invoke the parent class's constructor:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    let child = new Child(); // Outputs: Parent constructor //
-                    Outputs: Child constructor
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`let child = new Child(); // Outputs: Parent constructor
+// Outputs: Child constructor`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, creating an instance of the{" "}
                     <Code code="Child" /> class triggers both the parent and
