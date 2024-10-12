@@ -12,6 +12,7 @@ function Sidebar() {
         "Conditionals",
         "Loops",
         "Functions",
+        "Classes and Objects",
         "Modules",
         "Documentation",
     ];

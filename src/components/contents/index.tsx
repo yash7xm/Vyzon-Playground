@@ -16,6 +16,9 @@ function Content() {
         conditionals: React.lazy(() => import("../sections/conditionals")),
         loops: React.lazy(() => import("../sections/loops")),
         functions: React.lazy(() => import("../sections/functions")),
+        classesandobjects: React.lazy(
+            () => import("../sections/classes-and-objects")
+        ),
         documentation: React.lazy(() => import("../sections/documentation")),
         modules: React.lazy(() => import("../sections/modules")),
     };
