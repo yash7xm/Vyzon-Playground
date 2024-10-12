@@ -1,5 +1,7 @@
 import Code from "../utils/code";
 import { Separator } from "../ui/separator";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const ClassesAndObjectsContent = () => {
     return (
@@ -30,20 +32,22 @@ const ClassesAndObjectsContent = () => {
                 methods (functions) and a constructor using the{" "}
                 <Code code="def" /> keyword. Here’s an example of a class that
                 represents a person:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    class Person &#123;{"\n"}
-                    {"  "}def constructor(name, age) &#123;{"\n"}
-                    {"    "}this.name = name;{"\n"}
-                    {"    "}this.age = age;{"\n"}
-                    {"  "}&#125;
-                    {"\n\n"}
-                    {"  "}def greet() &#123;{"\n"}
-                    {"    "}write("Hello, my name is " + this.name + " and I am
-                    " + this.age + " years old.");{"\n"}
-                    {"  "}&#125;
-                    {"\n"}
-                    &#125;
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`class Person {
+    def constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    def greet() {
+        write("Hello, my name is " + this.name + " and I am " + this.age + " years old.");
+    }
+}`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, the class <Code code="Person" /> has a
                     constructor that initializes the <Code code="name" /> and{" "}
@@ -64,11 +68,14 @@ const ClassesAndObjectsContent = () => {
                 access its methods and properties. Here’s how to create an
                 object of the <Code code="Person" /> class and call its{" "}
                 <Code code="greet" /> method:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    let person1 = new Person("Yash", 22);{"\n"}
-                    person1.greet(); // Outputs: Hello, my name is Yash and I am
-                    22 years old.
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`let person1 = new Person("Yash", 22);
+person1.greet(); // Outputs: Hello, my name is Yash and I am 22 years old.`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, we create an instance of the{" "}
                     <Code code="Person" /> class named <Code code="person1" />{" "}
@@ -89,11 +96,14 @@ const ClassesAndObjectsContent = () => {
                 directly using the dot notation. For example, you can update the{" "}
                 <Code code="age" /> property of <Code code="person1" /> and call
                 the <Code code="greet" /> method again:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    person1.age = 23;{"\n"}
-                    person1.greet(); // Outputs: Hello, my name is Yash and I am
-                    23 years old.
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`person1.age = 23;
+person1.greet(); // Outputs: Hello, my name is Yash and I am 23 years old.`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, we update the <Code code="age" /> property
                     of <Code code="person1" /> to 23, and then we call the{" "}
@@ -114,20 +124,22 @@ const ClassesAndObjectsContent = () => {
                 functionality of the parent class while adding additional
                 properties or methods in the child class. Here’s an example of
                 inheritance:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    class Student extends Person &#123;{"\n"}
-                    {"  "}def constructor(name, age, major) &#123;{"\n"}
-                    {"    "}super(name, age);{"\n"}
-                    {"    "}this.major = major;{"\n"}
-                    {"  "}&#125;
-                    {"\n\n"}
-                    {"  "}def study() &#123;{"\n"}
-                    {"    "}write(this.name + " is studying " + this.major +
-                    ".");{"\n"}
-                    {"  "}&#125;
-                    {"\n"}
-                    &#125;
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`class Student extends Person {
+    def constructor(name, age, major) {
+        super(name, age);
+        this.major = major;
+    }
+
+    def study() {
+        write(this.name + " is studying " + this.major + ".");
+    }
+}`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, the <Code code="Student" /> class extends
                     the <Code code="Person" /> class. The constructor of the{" "}
