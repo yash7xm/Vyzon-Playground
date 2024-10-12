@@ -1,4 +1,5 @@
 import { PlayIcon, CopyIcon, DownloadIcon } from "@radix-ui/react-icons";
+import { toast } from "sonner";
 
 interface HelperButtonsProps {
     runCode: () => void;
@@ -9,7 +10,7 @@ function HelperButtons({ runCode, code }: HelperButtonsProps) {
     const handleCopy = async () => {
         try {
             await navigator.clipboard.writeText(code);
-            alert("Code copied to clipboard!");
+            toast("Code copied to clipboard!");
         } catch (err) {
             console.error("Failed to copy: ", err);
         }
