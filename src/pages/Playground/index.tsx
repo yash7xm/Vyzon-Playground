@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar";
+import { PlaygroundResizable } from "@/components/playground/playgroundResizable";
 
 function Playground() {
     return (
@@ -7,7 +8,9 @@ function Playground() {
                 <Navbar />
             </div>
 
-            <div>Playground</div>
+            <div className="w-full h-full">
+                <PlaygroundResizable />
+            </div>
         </div>
     );
 }
