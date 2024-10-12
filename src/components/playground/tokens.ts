@@ -17,6 +17,8 @@ export const tokens: languages.IMonarchLanguage = {
         "return",
         "new",
         "super",
+        "write",
+        "constructor"
     ],
     typeKeywords: ["null", "true", "false"],
     operators: [

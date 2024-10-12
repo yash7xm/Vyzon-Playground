@@ -1,15 +1,13 @@
 import { useEffect } from "react";
 import Editor, { loader } from "@monaco-editor/react";
-import { Monaco } from "@monaco-editor/react"; // Import Monaco types
+import { Monaco } from "@monaco-editor/react";
 import { tokens } from "./tokens";
 
 const CodeEditor = () => {
     useEffect(() => {
-        // Initialize Monaco editor and define Vyzon language
         loader
             .init()
             .then((monaco: Monaco) => {
-                // Register Vyzon as a language if not already registered
                 if (
                     !monaco.languages
                         .getLanguages()
@@ -17,10 +15,8 @@ const CodeEditor = () => {
                 ) {
                     monaco.languages.register({ id: "vyzon" });
 
-                    // Define the tokens and syntax rules for Vyzon
                     monaco.languages.setMonarchTokensProvider("vyzon", tokens);
 
-                    // Set language configuration (comments, brackets, etc.)
                     monaco.languages.setLanguageConfiguration("vyzon", {
                         comments: {
                             lineComment: "//",
