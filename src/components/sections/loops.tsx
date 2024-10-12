@@ -1,5 +1,7 @@
 import Code from "../utils/code";
 import { Separator } from "../ui/separator";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const LoopsContent = () => {
     return (
@@ -30,12 +32,13 @@ const LoopsContent = () => {
                 of three parts: initialization, condition, and iteration. This
                 structure allows for precise control of how many iterations are
                 performed. Here's an example:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    write("Using the for loop:");{"\n\n"}
-                    for (let i=0; i &lt; 10; i += 1) &#123;{"\n"}
-                    {"  "}write("Current value of i: ", i);{"\n"}
-                    &#125;
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`write("Using the for loop:");\n\nfor (let i=0; i < 10; i += 1) {\n  write("Current value of i: ", i);\n}`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, the loop starts with <Code code="i = 0" />,
                     and it runs as long as <Code code="i < 10" />. After each
@@ -56,14 +59,13 @@ const LoopsContent = () => {
                 <Code code="for" /> loop, the number of iterations is not
                 predetermined. Instead, it continues until the condition becomes
                 false. Here's an example:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    write("Using the while loop:");{"\n\n"}
-                    let j = 0;{"\n"}
-                    while (j &lt; 5) &#123;{"\n"}
-                    {"  "}write("Current value of j: ", j);{"\n"}
-                    {"  "}j = j + 1;{"\n"}
-                    &#125;
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`write("Using the while loop:");\n\nlet j = 0;\nwhile (j < 5) {\n  write("Current value of j: ", j);\n  j = j + 1;\n}`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, the loop runs as long as <Code code="j" />{" "}
                     is less than 5. The variable <Code code="j" /> starts at 0
@@ -83,14 +85,13 @@ const LoopsContent = () => {
                 executes the code block at least once, regardless of whether the
                 condition is true. The condition is checked after the first
                 iteration. Here's an example:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    write("Using the do-while loop:");{"\n\n"}
-                    let k = 0;{"\n"}
-                    do &#123;{"\n"}
-                    {"  "}write("Current value of k: ", k);{"\n"}
-                    {"  "}k = k + 1;{"\n"}
-                    &#125; while (k &lt; 5);
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`write("Using the do-while loop:");\n\nlet k = 0;\ndo {\n  write("Current value of k: ", k);\n  k = k + 1;\n} while (k < 5);`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, the code inside the loop is executed first,
                     and only then is the condition <Code code="k < 5" />{" "}
