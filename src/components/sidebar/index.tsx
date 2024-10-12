@@ -6,7 +6,7 @@ import { documentationLinks } from "../utils/info";
 function Sidebar() {
     return (
         <ScrollArea className="w-full h-full border py-4 px-6 rounded-md">
-            <h4 className="mb-8 text-sm font-medium leading-none">
+            <h4 className="mb-8 font-medium text-sm leading-none font-montserrat">
                 Documentation
             </h4>
             {documentationLinks.map((doc, index) => (
@@ -21,7 +21,10 @@ function DocsLink({ doc }: { doc: string }) {
 
     return (
         <>
-            <Link to={docUrl} className="text-sm text-blue-600 hover:underline">
+            <Link
+                to={docUrl}
+                className="text-blue-600 hover:underline font-roboto"
+            >
                 {doc}
             </Link>
             <Separator className="my-2" />

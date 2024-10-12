@@ -12,7 +12,7 @@ function Navbar() {
     };
 
     return (
-        <div className="rounded-lg border px-4 py-2 flex items-center justify-between">
+        <div className="rounded-lg border px-4 py-2 flex items-center justify-between font-roboto">
             <div className="flex items-center">
                 <div className="cursor-pointer">Vyzon</div>
 
