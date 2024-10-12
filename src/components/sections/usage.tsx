@@ -1,28 +1,33 @@
 const UsageContent = () => {
     return (
-        <div>
-            <div className="text-lg font-bold mb-2 text-brightBlue font-montserrat">
+        <div className="p-6">
+            {/* Usage Heading */}
+            <div className="text-4xl font-bold text-brightBlue font-montserrat mb-6 underline underline-offset-4 decoration-wavy">
                 Usage
             </div>
-            <div className="text-sm mb-4 text-darkGray font-roboto">
-                <div className="text-bold text-brightBlue">
+
+            {/* Usage Instructions */}
+            <div className="text-lg text-darkGray font-roboto leading-8 mb-6">
+                {/* Running a Vyzon Script */}
+                <div className="text-xl font-bold text-brightBlue mb-4">
                     Running a Vyzon Script from a File:
                 </div>
-                <p>
-                    Create a new Vyzon file with a .vy extension, e.g.,{" "}
-                    <code className="text-darkGray font-roboto">
-                        yourfile.vy
-                    </code>
+                <p className="mb-4">
+                    Create a new Vyzon file with a{" "}
+                    <code className="font-mono">.vy</code> extension, e.g.,{" "}
+                    <code className="font-mono text-darkGray">yourfile.vy</code>
                     .
                 </p>
-                <pre className="bg-gray-100 p-2 text-darkGray font-roboto">
-                    bin/vyzon -f yourfile.vy
+                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm">
+                    $ bin/vyzon -f yourfile.vy
                 </pre>
-                <div className="text-bold text-brightBlue">
+
+                {/* Running an Expression Directly */}
+                <div className="text-xl font-bold text-brightBlue mt-6 mb-4">
                     Running an Expression Directly:
                 </div>
-                <pre className="bg-gray-100 p-2 text-darkGray font-roboto">
-                    bin/vyzon -e "write(2 + 2);"
+                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm">
+                    $ bin/vyzon -e "write(2 + 2);"
                 </pre>
             </div>
         </div>

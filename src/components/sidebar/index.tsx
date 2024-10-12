@@ -6,8 +6,8 @@ function Sidebar() {
     const documentationLinks = [
         "Introduction",
         "Getting Started",
-        "Modules",
         "Usage",
+        "Modules",
         "Documentation",
     ];
 
