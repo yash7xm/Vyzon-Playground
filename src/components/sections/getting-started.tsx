@@ -1,5 +1,7 @@
 import Code from "../utils/code";
 import { Separator } from "../ui/separator";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const InstallationAndUsageContent = () => {
     return (
@@ -20,9 +22,13 @@ const InstallationAndUsageContent = () => {
             <div className="text-lg text-darkGray font-roboto leading-8 mb-6">
                 You can install Vyzon directly from npm by running the following
                 command in your terminal:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
+                <SyntaxHighlighter
+                    language="bash"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
                     $ npm i vyzon
-                </pre>
+                </SyntaxHighlighter>
             </div>
             <Separator className="mb-6" />
 
@@ -36,22 +42,34 @@ const InstallationAndUsageContent = () => {
             <ol className="list-decimal list-inside mb-6">
                 <li>
                     Clone the repository to your local machine using Git:
-                    <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
+                    <SyntaxHighlighter
+                        language="bash"
+                        style={oneLight}
+                        className="mt-2 shadow-lg rounded-lg"
+                    >
                         $ git clone https://github.com/yash7xm/Vyzon.git
-                    </pre>
+                    </SyntaxHighlighter>
                 </li>
                 <li>
                     Change your current directory to the cloned repository:
-                    <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
+                    <SyntaxHighlighter
+                        language="bash"
+                        style={oneLight}
+                        className="mt-2 shadow-lg rounded-lg"
+                    >
                         $ cd Vyzon
-                    </pre>
+                    </SyntaxHighlighter>
                 </li>
                 <li>
                     Make the Vyzon script executable by running the following
                     command:
-                    <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
+                    <SyntaxHighlighter
+                        language="bash"
+                        style={oneLight}
+                        className="mt-2 shadow-lg rounded-lg"
+                    >
                         $ chmod +x bin/vyzon
-                    </pre>
+                    </SyntaxHighlighter>
                 </li>
             </ol>
             <Separator className="mb-6" />
@@ -80,9 +98,13 @@ const InstallationAndUsageContent = () => {
                     <li>
                         To run your Vyzon script, execute the following command
                         in your terminal:
-                        <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
+                        <SyntaxHighlighter
+                            language="bash"
+                            style={oneLight}
+                            className="mt-2 shadow-lg rounded-lg"
+                        >
                             $ bin/vyzon -f yourfile.vy
-                        </pre>
+                        </SyntaxHighlighter>
                         <p className="text-sm mt-2">
                             This command will parse and interpret the contents
                             of <Code code="yourfile.vy" />.
@@ -99,9 +121,13 @@ const InstallationAndUsageContent = () => {
                     You can also run an expression directly from the command
                     line by using the <Code code="-e" /> flag:
                 </p>
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
+                <SyntaxHighlighter
+                    language="bash"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
                     $ bin/vyzon -e "write(2 + 2);"
-                </pre>
+                </SyntaxHighlighter>
                 <p className="text-sm mt-2">
                     This command will parse and evaluate the expression{" "}
                     <Code code="2 + 2" />.
