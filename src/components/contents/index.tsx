@@ -27,7 +27,11 @@ function Content() {
         useState<React.LazyExoticComponent<React.FC> | null>(null);
 
     useEffect(() => {
-        const section = sectionComponents[id as string] || null;
+        // Default to "introduction" if no id is provided
+        const section =
+            id && sectionComponents[id]
+                ? sectionComponents[id]
+                : sectionComponents["introduction"];
         setSectionContent(section);
     }, [id]);
 

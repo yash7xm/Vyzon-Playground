@@ -1,21 +1,9 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
+import { documentationLinks } from "../utils/info";
 
 function Sidebar() {
-    const documentationLinks = [
-        "Introduction",
-        "Getting Started",
-        "Variables and DataTypes",
-        "Build Ins",
-        "Conditionals",
-        "Loops",
-        "Functions",
-        "Classes and Objects",
-        "Inheritance",
-        "Modules",
-    ];
-
     return (
         <ScrollArea className="w-full h-full border py-4 px-6 rounded-md">
             <h4 className="mb-8 text-sm font-medium leading-none">

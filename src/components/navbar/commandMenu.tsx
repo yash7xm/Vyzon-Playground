@@ -7,6 +7,7 @@ import {
     CommandList,
 } from "@/components/ui/command";
 import { Link } from "react-router-dom";
+import { documentationLinks } from "../utils/info";
 
 interface CommandMenuProps {
     open: boolean;
@@ -14,12 +15,6 @@ interface CommandMenuProps {
 }
 
 export function CommandMenu({ open, setOpen }: CommandMenuProps) {
-    const documentationLinks = [
-        "Introduction",
-        "Getting Started",
-        "API Reference",
-    ];
-
     const handleNavigate = () => {
         setOpen(false);
     };
@@ -32,7 +27,7 @@ export function CommandMenu({ open, setOpen }: CommandMenuProps) {
                 <CommandGroup heading="Suggestions">
                     {documentationLinks.map((doc, index) => {
                         const docUrl = `/docs/${doc
-                            .replace(/\s+/g, "-")
+                            .replace(/\s+/g, "")
                             .toLowerCase()}`;
                         return (
                             <Link
