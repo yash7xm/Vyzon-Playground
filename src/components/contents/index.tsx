@@ -12,6 +12,7 @@ function Content() {
         variablesanddatatypes: React.lazy(
             () => import("../sections/variables-and-datatypes")
         ),
+        buildins: React.lazy(() => import("../sections/build-ins")),
         documentation: React.lazy(() => import("../sections/documentation")),
         modules: React.lazy(() => import("../sections/modules")),
     };

@@ -8,6 +8,7 @@ function Sidebar() {
         "Getting Started",
         "Usage",
         "Variables and DataTypes",
+        "Build Ins",
         "Modules",
         "Documentation",
     ];
