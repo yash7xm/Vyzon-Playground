@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 function Sidebar() {
     const documentationLinks = [
         "Introduction",
-        "Installation",
+        "Getting Started",
         "Modules",
         "Usage",
         "Documentation",
@@ -24,7 +24,7 @@ function Sidebar() {
 }
 
 function DocsLink({ doc }: { doc: string }) {
-    const docUrl = `/docs/${doc.replace(/\s+/g, "-").toLowerCase()}`;
+    const docUrl = `/docs/${doc.replace(/\s+/g, "").toLowerCase()}`;
 
     return (
         <>

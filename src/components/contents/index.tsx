@@ -7,7 +7,7 @@ function Content() {
         [key: string]: React.LazyExoticComponent<React.FC>;
     } = {
         introduction: React.lazy(() => import("../sections/introduction")),
-        installation: React.lazy(() => import("../sections/installation")),
+        gettingstarted: React.lazy(() => import("../sections/getting-started")),
         usage: React.lazy(() => import("../sections/usage")),
         documentation: React.lazy(() => import("../sections/documentation")),
         modules: React.lazy(() => import("../sections/modules")),
