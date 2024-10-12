@@ -8,7 +8,6 @@ function Content() {
     } = {
         introduction: React.lazy(() => import("../sections/introduction")),
         gettingstarted: React.lazy(() => import("../sections/getting-started")),
-        usage: React.lazy(() => import("../sections/usage")),
         variablesanddatatypes: React.lazy(
             () => import("../sections/variables-and-datatypes")
         ),
@@ -20,7 +19,6 @@ function Content() {
             () => import("../sections/classes-and-objects")
         ),
         inheritance: React.lazy(() => import("../sections/inheritance")),
-        documentation: React.lazy(() => import("../sections/documentation")),
         modules: React.lazy(() => import("../sections/modules")),
     };
 

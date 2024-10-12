@@ -6,7 +6,6 @@ function Sidebar() {
     const documentationLinks = [
         "Introduction",
         "Getting Started",
-        "Usage",
         "Variables and DataTypes",
         "Build Ins",
         "Conditionals",
@@ -15,7 +14,6 @@ function Sidebar() {
         "Classes and Objects",
         "Inheritance",
         "Modules",
-        "Documentation",
     ];
 
     return (
