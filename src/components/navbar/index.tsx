@@ -36,7 +36,13 @@ function Navbar() {
                     Playground
                 </div>
                 <div className="cursor-pointer">
-                    <GitHubLogoIcon className="size-5" />
+                    <a
+                        href="https://github.com/yash7xm/Vyzon"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <GitHubLogoIcon className="size-5" />
+                    </a>
                 </div>
             </div>
 

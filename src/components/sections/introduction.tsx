@@ -57,7 +57,7 @@ const IntroductionContent = () => {
                     <ul className="list-disc pl-6">
                         <li>
                             <a
-                                href="[Twitter Link]"
+                                href="https://x.com/Yash_Poonia_"
                                 className="text-brightBlue underline"
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -67,7 +67,7 @@ const IntroductionContent = () => {
                         </li>
                         <li>
                             <a
-                                href="[GitHub Link]"
+                                href="https://github.com/yash7xm"
                                 className="text-brightBlue underline"
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -77,7 +77,7 @@ const IntroductionContent = () => {
                         </li>
                         <li>
                             <a
-                                href="[LinkedIn Link]"
+                                href="https://www.linkedin.com/in/yash-poonia-00326022b/"
                                 className="text-brightBlue underline"
                                 target="_blank"
                                 rel="noopener noreferrer"
