@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
     ResizableHandle,
     ResizablePanel,
@@ -7,6 +7,7 @@ import {
 
 import CodeEditor from "./code-editor";
 import HelperButtons from "./helper-btns";
+import { runCode } from "@/language";
 
 export function PlaygroundResizable() {
     const [code, setCode] = useState<string>(
@@ -14,13 +15,30 @@ export function PlaygroundResizable() {
     );
     const [output, setOutput] = useState<string>("");
 
-    const runCode = () => {
+    // Save original console.log
+    const originalConsoleLog = console.log;
+
+    // Override console.log to store logs in output
+    console.log = (...args: any[]) => {
+        const logOutput = args.join(" "); // Convert log arguments to a string
+        setOutput(logOutput); // Append to existing output
+        originalConsoleLog(...args); // Optional: Keep logging to the console as well
+    };
+
+    const handleRunCode = () => {
         try {
-            setOutput(code);
+            runCode(code);
         } catch (error) {
-            setOutput(`Error: ${error}`);
+            setOutput((prevOutput) => prevOutput + `Error: ${error}\n`);
         }
     };
+
+    // Cleanup the overridden console.log when the component unmounts
+    useEffect(() => {
+        return () => {
+            console.log = originalConsoleLog; // Restore original console.log
+        };
+    }, []);
 
     return (
         <ResizablePanelGroup
@@ -43,7 +61,7 @@ export function PlaygroundResizable() {
                     <ResizableHandle />
                     <ResizablePanel defaultSize={10}>
                         <div className="flex h-full items-center justify-center">
-                            <HelperButtons runCode={runCode} />
+                            <HelperButtons runCode={handleRunCode} />
                         </div>
                     </ResizablePanel>
                 </ResizablePanelGroup>

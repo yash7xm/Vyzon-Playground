@@ -1,12 +1,16 @@
-const { Tokenizer } = require("./Tokenizer.js");
+import { Tokenizer } from "./Tokenizer";
 
 class Parser {
+    private _string: string;
+    private _tokenizer: Tokenizer;
+    private _lookahead: any;
+
     constructor() {
         this._string = "";
         this._tokenizer = new Tokenizer();
     }
 
-    parse(string) {
+    parse(string: string) {
         this._string = string;
         this._tokenizer.init(this._string);
 
@@ -22,8 +26,8 @@ class Parser {
         };
     }
 
-    StatementList(stopLookAhead = null) {
-        const statementList = [this.Statement()];
+    StatementList(stopLookAhead: string | null = null) {
+        const statementList: any[] = [this.Statement()];
         while (
             this._lookahead != null &&
             this._lookahead.type !== stopLookAhead
@@ -121,7 +125,7 @@ class Parser {
     }
 
     VariableDeclarationList() {
-        const declarations = [];
+        const declarations: any[] = [];
 
         do {
             declarations.push(this.VariableDeclaration());
@@ -150,29 +154,7 @@ class Parser {
         return this.AssignmentExpression();
     }
 
-    // IfStatement() {
-    //     this._eat('if');
-    //     this._eat('(');
-    //     const test = this.Expression();
-    //     this._eat(')');
-    //     const consequent = this.Statement();
-
-    //     let alternate = null;
-
-    //     if (this._lookahead != null && this._lookahead.type === 'else') {
-    //         this._eat('else');
-    //         alternate = this.Statement();
-    //     }
-
-    //     return {
-    //         type: 'IfStatement',
-    //         test,
-    //         consequent,
-    //         alternate,
-    //     }
-    // }
-
-    IfStatement() {
+    IfStatement(): any {
         this._eat("if");
         this._eat("(");
         const test = this.Expression();
@@ -203,7 +185,7 @@ class Parser {
         }
     }
 
-    ElifStatement() {
+    ElifStatement(): any {
         this._eat("elif");
         this._eat("(");
         const test = this.Expression();
@@ -222,7 +204,7 @@ class Parser {
         };
     }
 
-    ElseStatement() {
+    ElseStatement(): any {
         this._eat("else");
         return this.Statement();
     }
@@ -240,7 +222,7 @@ class Parser {
         }
     }
 
-    WhileStatement() {
+    WhileStatement(): any {
         this._eat("while");
         this._eat("(");
         let test = this.Expression();
@@ -254,7 +236,7 @@ class Parser {
         };
     }
 
-    DoWhileStatement() {
+    DoWhileStatement(): any {
         this._eat("do");
         let body = this.Statement();
         this._eat("while");
@@ -270,7 +252,7 @@ class Parser {
         };
     }
 
-    ForStatement() {
+    ForStatement(): any {
         this._eat("for");
         this._eat("(");
 
@@ -322,7 +304,7 @@ class Parser {
     }
 
     FormalParameterList() {
-        let params = [];
+        let params: any[] = [];
         do {
             params.push(this.Identifier());
         } while (this._lookahead.type === "," && this._eat(","));
@@ -375,7 +357,7 @@ class Parser {
         return this.AssignmentExpression();
     }
 
-    AssignmentExpression() {
+    AssignmentExpression(): any {
         let left = this.ConditionalExpression();
 
         while (this._isAssignmentOperator(this._lookahead.type)) {
@@ -393,7 +375,7 @@ class Parser {
         return left;
     }
 
-    ConditionalExpression() {
+    ConditionalExpression(): any {
         let test = this.LogicalORExpression();
         if (this._lookahead.type === "?") this._eat("?");
         else return test;
@@ -532,7 +514,7 @@ class Parser {
         return left;
     }
 
-    UnaryExpression() {
+    UnaryExpression(): any {
         let operator;
         switch (this._lookahead.type) {
             case "ADDITIVE_OPERATOR":
@@ -558,7 +540,7 @@ class Parser {
         return this.CallMemberExpression();
     }
 
-    CallMemberExpression() {
+    CallMemberExpression(): any {
         if (this._lookahead.type === "super") {
             return this._CallExpression(this.Super());
         }
@@ -572,7 +554,7 @@ class Parser {
         return member;
     }
 
-    _CallExpression(calle) {
+    _CallExpression(calle: any) {
         let callExpression = {
             type: "CallExpression",
             calle,
@@ -596,7 +578,7 @@ class Parser {
     }
 
     ArgumentsList() {
-        const argumentList = [];
+        const argumentList: any[] = [];
         do {
             argumentList.push(this.AssignmentExpression());
         } while (this._lookahead.type === "," && this._eat(","));
@@ -604,7 +586,7 @@ class Parser {
         return argumentList;
     }
 
-    MemberExpression() {
+    MemberExpression(): any {
         let object = this.PrimaryExpression();
 
         while (this._lookahead.type === "." || this._lookahead.type === "[") {
@@ -681,7 +663,7 @@ class Parser {
         return expression;
     }
 
-    _isAssignmentOperator(node) {
+    _isAssignmentOperator(node: any): any {
         return node === "SIMPLE_ASSIGN" || node === "COMPLEX_ASSIGN";
     }
 
@@ -692,7 +674,7 @@ class Parser {
         return this._eat("COMPLEX_ASSIGN");
     }
 
-    _checkValidAssignmentTarget(node) {
+    _checkValidAssignmentTarget(node: any): any {
         if (node.type === "Identifier" || node.type === "MemberExpression") {
             return node;
         }
@@ -710,7 +692,7 @@ class Parser {
         };
     }
 
-    _isLiteral(tokenType) {
+    _isLiteral(tokenType: any): any {
         return (
             tokenType === "NUMBER" ||
             tokenType === "STRING" ||
@@ -752,7 +734,7 @@ class Parser {
         };
     }
 
-    BooleanLiteral(value) {
+    BooleanLiteral(value: any): any {
         this._eat(value ? "true" : "false");
         return {
             type: "BooleanLiteral",
@@ -768,7 +750,7 @@ class Parser {
         };
     }
 
-    _eat(tokenType) {
+    _eat(tokenType: any): any {
         const token = this._lookahead;
 
         if (token == null) {
@@ -789,4 +771,4 @@ class Parser {
     }
 }
 
-module.exports = { Parser };
+export { Parser };

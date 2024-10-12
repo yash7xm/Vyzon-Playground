@@ -1,4 +1,6 @@
-const Spec = [
+type TokenSpec = [RegExp, string | null][];
+
+const Spec: TokenSpec = [
     // --------------------------------------
     // Whitespace:
     [/^\s+/, null],
@@ -94,22 +96,30 @@ const Spec = [
     [/^\w+/, "IDENTIFIER"],
 ];
 
+interface Token {
+    type: string;
+    value: string;
+}
+
 class Tokenizer {
-    init(string) {
+    private _string: any;
+    private _cursor: any;
+
+    init(string: string): void {
         this._string = string;
         this._cursor = 0;
     }
 
-    isEOF() {
-        return this._cursor == this._string.length;
+    isEOF(): boolean {
+        return this._cursor === this._string.length;
     }
 
-    hasMoreTokens() {
+    hasMoreTokens(): boolean {
         return this._cursor < this._string.length;
     }
 
-    getNextToken() {
-        if (!this.hasMoreTokens) return null;
+    getNextToken(): Token | null {
+        if (!this.hasMoreTokens()) return null;
 
         const string = this._string.slice(this._cursor);
 
@@ -127,9 +137,11 @@ class Tokenizer {
                 value: tokenValue,
             };
         }
+
+        return null;
     }
 
-    _match(regexp, string) {
+    private _match(regexp: RegExp, string: string): string | null {
         const matched = regexp.exec(string);
 
         if (matched == null) return null;
@@ -140,4 +152,4 @@ class Tokenizer {
     }
 }
 
-module.exports = { Tokenizer };
+export { Tokenizer };

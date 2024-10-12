@@ -1,24 +1,26 @@
-const Environment = require("./Environment.js");
-const { Parser } = require("./parser/Parser.js");
+import Environment from "./Environment";
+import { Parser } from "./parser/Parser";
 
 class Interpreter {
-    constructor(global = GlobalEnvironment) {
+    global: Environment;
+
+    constructor(global: Environment = GlobalEnvironment) {
         this.global = global;
     }
 
-    interpret(node) {
+    interpret(node: any): any {
         return this.StatementList(node);
     }
 
-    StatementList(body, env = this.global) {
-        let result;
+    StatementList(body: any[], env: Environment = this.global): any {
+        let result: any;
         for (const statement of body) {
             result = this.Statement(statement, env);
         }
         return result;
     }
 
-    Statement(node, env) {
+    Statement(node: any, env: Environment): any {
         switch (node.type) {
             case "ExpressionStatement":
                 return this.ExpressionStatement(node.expression, env);
@@ -47,7 +49,7 @@ class Interpreter {
         }
     }
 
-    ImportStatement(node) {
+    ImportStatement(node: any): void {
         const parser = new Parser();
         const fs = require("fs");
         const path = require("path");
@@ -59,7 +61,7 @@ class Interpreter {
             process.cwd(),
         ];
 
-        let fullPath = null;
+        let fullPath: string | null = null;
 
         for (const dir of searchDirectories) {
             const potentialPath = path.join(dir, `${moduleName}.vy`);
@@ -83,7 +85,7 @@ class Interpreter {
         }
     }
 
-    ModuleDeclaration(node, env) {
+    ModuleDeclaration(node: any, env: Environment): any {
         const moduleEnv = new Environment({}, env);
 
         this.StatementList(node.body.body, moduleEnv);
@@ -91,7 +93,7 @@ class Interpreter {
         return env.define(node.name.name, moduleEnv);
     }
 
-    ClassDeclaration(node, env) {
+    ClassDeclaration(node: any, env: Environment): any {
         const className = node.id.name;
         const superClassName = node.superClass ? node.superClass.name : null;
 
@@ -104,7 +106,7 @@ class Interpreter {
         return env.define(className, classEnv);
     }
 
-    FunctionDeclaration(node, env) {
+    FunctionDeclaration(node: any, env: Environment): any {
         let name = node.name.name;
 
         let functionBody = {
@@ -117,12 +119,12 @@ class Interpreter {
         return env.define(name, functionBody);
     }
 
-    ReturnStatement(node, env) {
+    ReturnStatement(node: any, env: Environment): any {
         return this.Expression(node.argument, env);
     }
 
-    ForStatement(node, env) {
-        let result;
+    ForStatement(node: any, env: Environment): any {
+        let result: any;
         for (
             this.Statement(node.init, env);
             this.Expression(node.test, env);
@@ -134,16 +136,16 @@ class Interpreter {
         return result;
     }
 
-    DoWhileStatement(node, env) {
-        let result;
+    DoWhileStatement(node: any, env: Environment): any {
+        let result: any;
         do {
             result = this.Statement(node.body, env);
         } while (this.Expression(node.test, env));
         return result;
     }
 
-    WhileStatement(node, env) {
-        let result;
+    WhileStatement(node: any, env: Environment): any {
+        let result: any;
 
         while (this.Expression(node.test, env)) {
             result = this.Statement(node.body, env);
@@ -152,7 +154,7 @@ class Interpreter {
         return result;
     }
 
-    IfStatement(node, env) {
+    IfStatement(node: any, env: Environment): any {
         const testResult = this.Expression(node.test, env);
         if (testResult) {
             return this.Statement(node.consequent, env);
@@ -163,28 +165,28 @@ class Interpreter {
         }
     }
 
-    BlockStatement(node, env) {
+    BlockStatement(node: any, env: Environment): any {
         const blockEnv = new Environment({}, env);
         return this.StatementList(node, blockEnv);
     }
 
-    VariableStatement(node, env) {
-        return node.map((declaration) =>
+    VariableStatement(node: any, env: Environment): any {
+        return node.map((declaration: any) =>
             this.VariableDeclaration(declaration, env)
         );
     }
 
-    VariableDeclaration(node, env) {
+    VariableDeclaration(node: any, env: Environment): void {
         let id = node.id.name;
         let init = node.init !== null ? this.Expression(node.init, env) : 0;
         env.define(id, init);
     }
 
-    ExpressionStatement(expression, env) {
+    ExpressionStatement(expression: any, env: Environment): any {
         return this.Expression(expression, env);
     }
 
-    Expression(node, env) {
+    Expression(node: any, env: Environment): any {
         switch (node.type) {
             case "NumericLiteral":
                 return this.NumericLiteral(node);
@@ -215,12 +217,12 @@ class Interpreter {
             case "NewExpression":
                 return this.NewExpression(node, env);
             case "ThisExpression":
-                return this.ThisExpression(node, env);
+                return this.ThisExpression(env);
         }
     }
 
-    ThisExpression(node, env) {
-        let instance;
+    ThisExpression(env: Environment): any {
+        let instance: Environment;
         try {
             instance = env.lookup("this");
         } catch {
@@ -229,7 +231,7 @@ class Interpreter {
         return instance;
     }
 
-    CallExpression(node, env) {
+    CallExpression(node: any, env: Environment): any {
         switch (node.calle.type) {
             case "MemberExpression":
                 return this._callMemberExpression(node, env);
@@ -240,15 +242,15 @@ class Interpreter {
         }
     }
 
-    _callMemberExpression(node, env) {
+    _callMemberExpression(node: any, env: Environment): any {
         let object = this.Expression(node.calle.object, env);
         let method = object.lookup(node.calle.property.name);
 
-        let args = node.arguments.map((arg) => this.Expression(arg, env));
-        let params = method.params.map((param) => param.name);
+        let args = node.arguments.map((arg: any) => this.Expression(arg, env));
+        let params = method.params.map((param: any) => param.name);
 
-        const activationRecord = {};
-        params.forEach((param, index) => {
+        const activationRecord: { [key: string]: any } = {};
+        params.forEach((param: string, index: number) => {
             activationRecord[param] = args[index];
         });
 
@@ -259,7 +261,7 @@ class Interpreter {
         return this.Statement(method.body, activationEnv);
     }
 
-    _callSuperExpression(node, env) {
+    _callSuperExpression(node: any, env: Environment): any {
         const instanceEnv = env.lookup("this");
 
         const superEnv = instanceEnv.parent.parent;
@@ -274,12 +276,14 @@ class Interpreter {
             throw new ReferenceError(`Superclass constructor not found.`);
         }
 
-        const args = node.arguments.map((arg) => this.Expression(arg, env));
+        const args = node.arguments.map((arg: any) =>
+            this.Expression(arg, env)
+        );
 
-        const params = constructor.params.map((param) => param.name);
+        const params = constructor.params.map((param: any) => param.name);
 
-        const activationRecord = {};
-        params.forEach((param, index) => {
+        const activationRecord: { [key: string]: any } = {};
+        params.forEach((param: string, index: number) => {
             activationRecord[param] = args[index];
         });
 
@@ -293,17 +297,19 @@ class Interpreter {
         return this.Statement(constructor.body, activationEnv);
     }
 
-    _normalCallExpression(node, env) {
+    _normalCallExpression(node: any, env: Environment): any {
         if (node.calle.name === "write") {
             return this._callWriteExpression(node, env);
         }
 
         let fn = env.lookup(node.calle.name);
-        let args = node.arguments.map((args) => this.Expression(args, env));
-        let params = fn.params.map((param) => param.name);
+        let args = node.arguments.map((args: any) =>
+            this.Expression(args, env)
+        );
+        let params = fn.params.map((param: any) => param.name);
 
-        let activationRecord = {};
-        params.forEach((param, index) => {
+        let activationRecord: { [key: string]: any } = {};
+        params.forEach((param: string, index: number) => {
             activationRecord[param] = args[index];
         });
 
@@ -312,23 +318,27 @@ class Interpreter {
         return this.Statement(fn.body, activationEnv);
     }
 
-    _callWriteExpression(node, env) {
-        let args = node.arguments.map((args) => this.Expression(args, env));
+    _callWriteExpression(node: any, env: Environment): any {
+        let args = node.arguments.map((args: any) =>
+            this.Expression(args, env)
+        );
         return console.log(...args);
     }
 
-    NewExpression(node, env) {
+    NewExpression(node: any, env: Environment): any {
         let classEnv = env.lookup(node.callee.name);
 
         let instanceEnv = new Environment({}, classEnv);
 
         let constructor = classEnv.lookup("constructor");
         if (constructor) {
-            let args = node.arguments.map((arg) => this.Expression(arg, env));
-            let params = constructor.params.map((param) => param.name);
+            let args = node.arguments.map((arg: any) =>
+                this.Expression(arg, env)
+            );
+            let params = constructor.params.map((param: any) => param.name);
 
-            const activationRecord = {};
-            params.forEach((param, index) => {
+            const activationRecord: { [key: string]: any } = {};
+            params.forEach((param: string, index: number) => {
                 activationRecord[param] = args[index];
             });
 
@@ -345,7 +355,7 @@ class Interpreter {
         return instanceEnv;
     }
 
-    MemberExpression(node, env) {
+    MemberExpression(node: any, env: Environment): any {
         let object = this.Expression(node.object, env);
 
         if (node.computed) {
@@ -355,13 +365,13 @@ class Interpreter {
         }
     }
 
-    ConditionalExpression(node, env) {
+    ConditionalExpression(node: any, env: Environment): any {
         return this.Expression(node.test, env)
             ? this.Expression(node.consequent, env)
             : this.Expression(node.alternate, env);
     }
 
-    AssignmentExpression(node, env) {
+    AssignmentExpression(node: any, env: Environment): any {
         if (node.operator === "=") {
             return this.SimpleAssign(node, env);
         } else {
@@ -369,7 +379,7 @@ class Interpreter {
         }
     }
 
-    BinaryExpression(node, env) {
+    BinaryExpression(node: any, env: Environment): any {
         switch (node.operator) {
             case "+":
             case "-":
@@ -387,7 +397,7 @@ class Interpreter {
         }
     }
 
-    MathExpression(node, env) {
+    MathExpression(node: any, env: Environment): any {
         let left = this.Expression(node.left, env);
         let right = this.Expression(node.right, env);
 
@@ -405,7 +415,7 @@ class Interpreter {
         }
     }
 
-    RealationalExpression(node, env) {
+    RealationalExpression(node: any, env: Environment): any {
         let left = this.Expression(node.left, env);
         let right = this.Expression(node.right, env);
 
@@ -425,21 +435,21 @@ class Interpreter {
         }
     }
 
-    LogicalORExpression(node, env) {
+    LogicalORExpression(node: any, env: Environment): any {
         let left = this.Expression(node.left, env);
         let right = this.Expression(node.right, env);
 
         return left || right;
     }
 
-    LogicalANDExpression(node, env) {
+    LogicalANDExpression(node: any, env: Environment): any {
         let left = this.Expression(node.left, env);
         let right = this.Expression(node.right, env);
 
         return left && right;
     }
 
-    UnaryExpression(node, env) {
+    UnaryExpression(node: any, env: Environment): any {
         let argument = this.Expression(node.argument, env);
         let operator = node.operator;
 
@@ -453,7 +463,7 @@ class Interpreter {
         }
     }
 
-    SimpleAssign(node, env) {
+    SimpleAssign(node: any, env: Environment): any {
         if (
             node.left.type === "MemberExpression" &&
             node.left.object.type === "ThisExpression"
@@ -473,7 +483,7 @@ class Interpreter {
         return value;
     }
 
-    ComplexAssign(node, env) {
+    ComplexAssign(node: any, env: Environment): void {
         let left = node.left.name;
         let right = this.Expression(node.right, env);
         const operator = node.operator[0];
@@ -506,23 +516,23 @@ class Interpreter {
         return;
     }
 
-    Identifier(node, env) {
+    Identifier(node: any, env: Environment): any {
         return env.lookup(node.name);
     }
 
-    NumericLiteral(node) {
+    NumericLiteral(node: any): number {
         return node.value;
     }
 
-    StringLiteral(node) {
+    StringLiteral(node: any): string {
         return node.value;
     }
 
-    BooleanLiteral(node) {
+    BooleanLiteral(node: any): boolean {
         return node.value;
     }
 
-    NullLiteral(node) {
+    NullLiteral(node: any): null {
         return node.value;
     }
 }
@@ -533,4 +543,4 @@ const GlobalEnvironment = new Environment({
     false: false,
 });
 
-module.exports = { Interpreter };
+export default Interpreter;
