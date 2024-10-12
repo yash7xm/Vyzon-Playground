@@ -19,6 +19,7 @@ function Content() {
         classesandobjects: React.lazy(
             () => import("../sections/classes-and-objects")
         ),
+        inheritance: React.lazy(() => import("../sections/inheritance")),
         documentation: React.lazy(() => import("../sections/documentation")),
         modules: React.lazy(() => import("../sections/modules")),
     };

@@ -13,6 +13,7 @@ function Sidebar() {
         "Loops",
         "Functions",
         "Classes and Objects",
+        "Inheritance",
         "Modules",
         "Documentation",
     ];
