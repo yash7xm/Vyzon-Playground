@@ -5,6 +5,7 @@ import {
 } from "@/components/ui/resizable";
 
 import CodeEditor from "./code-editor";
+import HelperButtons from "./helper-btns";
 
 export function PlaygroundResizable() {
     return (
@@ -21,14 +22,12 @@ export function PlaygroundResizable() {
             <ResizablePanel defaultSize={30}>
                 <ResizablePanelGroup direction="vertical">
                     <ResizablePanel defaultSize={90}>
-                        <div className="flex h-full items-center justify-center p-6">
-                            <span className="font-semibold">Two</span>
-                        </div>
+                        <div className="flex h-full p-6">Output</div>
                     </ResizablePanel>
                     <ResizableHandle />
                     <ResizablePanel defaultSize={10}>
-                        <div className="flex h-full items-center justify-center p-6">
-                            <span className="font-semibold">Three</span>
+                        <div className="flex h-full items-center justify-center">
+                            <HelperButtons />
                         </div>
                     </ResizablePanel>
                 </ResizablePanelGroup>
