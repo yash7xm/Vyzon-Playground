@@ -1,5 +1,7 @@
 import Code from "../utils/code";
 import { Separator } from "../ui/separator";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const ModulesContent = () => {
     return (
@@ -28,19 +30,21 @@ const ModulesContent = () => {
                 functions or classes. Here’s an example of a{" "}
                 <Code code="Math" /> module that includes a function to compute
                 the absolute value:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    module Math &#123;{"\n"}
-                    {"  "}def Abs(x) &#123;{"\n"}
-                    {"    "}if (x) &#123;{"\n"}
-                    {"      "}return -x;{"\n"}
-                    {"    &#125;"} else &#123;{"\n"}
-                    {"      "}return x;{"\n"}
-                    {"    &#125;"}
-                    {"\n"}
-                    {"  &#125;"}
-                    {"\n"}
-                    &#125;
-                </pre>
+                <SyntaxHighlighter
+                    language="ruby"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`module Math {
+  def Abs(x) {
+    if (x < 0) {
+      return -x;
+    } else {
+      return x;
+    }
+  }
+}`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, the <Code code="Math" /> module defines a
                     function called <Code code="Abs" /> that takes a number{" "}
@@ -60,9 +64,13 @@ const ModulesContent = () => {
                 name followed by the function name. Here’s how to call the{" "}
                 <Code code="Abs" /> function from the <Code code="Math" />{" "}
                 module:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    write(Math.Abs(-10)); // Output: 10
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`write(Math.Abs(-10)); // Output: 10`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, we call the <Code code="Abs" /> function
                     from the <Code code="Math" /> module with the argument{" "}
@@ -81,10 +89,14 @@ const ModulesContent = () => {
                 <Code code="import" /> statement. This enables you to reuse code
                 from external modules seamlessly. Here’s how to import and use
                 the <Code code="Math" /> module:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    import Math;{"\n"}
-                    write(Math.Abs(-10)); // Output: 10
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`import Math;
+write(Math.Abs(-10)); // Output: 10`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, we import the <Code code="Math" /> module
                     and call the <Code code="Abs" /> function with the argument{" "}
