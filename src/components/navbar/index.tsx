@@ -32,9 +32,11 @@ function Navbar() {
                         Documentation
                     </div>
                 </Link>
-                <div className="cursor-pointer text-sm hover:underline">
-                    Playground
-                </div>
+                <Link to="/playground">
+                    <div className="cursor-pointer text-sm hover:underline">
+                        Playground
+                    </div>
+                </Link>
                 <div className="cursor-pointer">
                     <a
                         href="https://github.com/yash7xm/Vyzon"
