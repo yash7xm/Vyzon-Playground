@@ -3,7 +3,12 @@ import Editor, { loader } from "@monaco-editor/react";
 import { Monaco } from "@monaco-editor/react";
 import { tokens } from "./tokens";
 
-const CodeEditor = () => {
+interface CodeEditorProps {
+    code: string;
+    setCode: (code: string) => void;
+}
+
+const CodeEditor: React.FC<CodeEditorProps> = ({ code, setCode }) => {
     useEffect(() => {
         loader
             .init()
@@ -49,8 +54,10 @@ const CodeEditor = () => {
 
     return (
         <Editor
-            defaultLanguage="vyzon"
-            defaultValue={`// Welcome to Vyzon Playground! \nlet a = "Hello, World!";\nwrite(a);`}
+            language="vyzon"
+            value={code}
+            onChange={(newValue) => setCode(newValue ?? "")}
+            options={{ minimap: { enabled: false } }}
         />
     );
 };

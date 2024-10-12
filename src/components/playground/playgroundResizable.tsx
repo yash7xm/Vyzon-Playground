@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
     ResizableHandle,
     ResizablePanel,
@@ -8,6 +9,19 @@ import CodeEditor from "./code-editor";
 import HelperButtons from "./helper-btns";
 
 export function PlaygroundResizable() {
+    const [code, setCode] = useState<string>(
+        `// Welcome to Vyzon Playground! \nlet a = "Hello, World!";\nwrite(a);`
+    );
+    const [output, setOutput] = useState<string>("");
+
+    const runCode = () => {
+        try {
+            setOutput(code);
+        } catch (error) {
+            setOutput(`Error: ${error}`);
+        }
+    };
+
     return (
         <ResizablePanelGroup
             direction="horizontal"
@@ -15,19 +29,21 @@ export function PlaygroundResizable() {
         >
             <ResizablePanel defaultSize={70}>
                 <div className="flex h-full w-full items-center justify-center p-6">
-                    <CodeEditor />
+                    <CodeEditor code={code} setCode={setCode} />
                 </div>
             </ResizablePanel>
             <ResizableHandle />
             <ResizablePanel defaultSize={30}>
                 <ResizablePanelGroup direction="vertical">
                     <ResizablePanel defaultSize={90}>
-                        <div className="flex h-full p-6">Output</div>
+                        <div className="flex h-full p-6 overflow-y-auto">
+                            <div>{output}</div>
+                        </div>
                     </ResizablePanel>
                     <ResizableHandle />
                     <ResizablePanel defaultSize={10}>
                         <div className="flex h-full items-center justify-center">
-                            <HelperButtons />
+                            <HelperButtons runCode={runCode} />
                         </div>
                     </ResizablePanel>
                 </ResizablePanelGroup>
