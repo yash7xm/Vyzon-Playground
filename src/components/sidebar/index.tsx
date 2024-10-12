@@ -11,6 +11,7 @@ function Sidebar() {
         "Build Ins",
         "Conditionals",
         "Loops",
+        "Functions",
         "Modules",
         "Documentation",
     ];
