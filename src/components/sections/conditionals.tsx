@@ -1,5 +1,7 @@
 import Code from "../utils/code";
 import { Separator } from "../ui/separator";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const ConditionalsContent = () => {
     return (
@@ -22,17 +24,21 @@ const ConditionalsContent = () => {
                     code depending on whether the condition is true or false.
                     Here’s an example:
                 </p>
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    let x = 10;{"\n\n"}
-                    if (x &gt; 15) &#123;{"\n"}
-                    {"  "}write("x is greater than 15");{"\n"}
-                    &#125; elif (x &gt; 5) &#123;{"\n"}
-                    {"  "}write("x is greater than 5 but not greater than 15");
-                    {"\n"}
-                    &#125; else &#123;{"\n"}
-                    {"  "}write("x is not greater than 5");{"\n"}
-                    &#125;
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`let x = 10;
+
+if (x > 15) {
+    write("x is greater than 15");
+} elif (x > 5) {
+    write("x is greater than 5 but not greater than 15");
+} else {
+    write("x is not greater than 5");
+}`}
+                </SyntaxHighlighter>
             </div>
             <Separator className="mb-6" />
 
