@@ -1,123 +1,114 @@
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 import Code from "../utils/code";
+import { Separator } from "../ui/separator";
 
 const VariablesAndDataTypesContent = () => {
     return (
         <div className="p-6">
             {/* Variable Declarations Section */}
-            <div className="text-4xl font-bold text-brightBlue font-montserrat mb-6 underline underline-offset-4 decoration-wavy">
-                Variable Declarations
+            <div className="text-4xl font-bold text-brightBlue font-montserrat mb-6 ">
+                Variable Declarations in Vyzon
             </div>
             <div className="text-lg text-darkGray font-roboto leading-8 mb-6">
                 In Vyzon, variables are declared using the <Code code="let" />{" "}
-                keyword. One of Vyzon's core principles is simplicity, and
-                variable declarations reflect this. When a variable is declared
-                using <Code code="let" /> without an explicit value, it is
-                automatically initialized with a default value of{" "}
-                <Code code="0" />. However, you can also assign specific values
-                at the time of declaration, including numbers, strings, and more
-                complex expressions.
-                <p className="mt-4">
-                    For example, consider the following declarations:
-                </p>
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    let a; // Variable 'a' is declared and initialized with the
-                    default value of 0{"\n"}
-                    let b = 1; // Variable 'b' is declared and initialized with
-                    the value 1{"\n"}
-                    let c = 'Hello, World!'; // Variable 'c' is a string
-                    initialized with text
-                </pre>
-                <p className="mt-4">
-                    By using <Code code="let" />, you can dynamically assign any
-                    value to a variable at runtime. Vyzon does not require you
-                    to specify the type of the variable explicitly, providing
-                    great flexibility and reducing boilerplate code.
-                </p>
+                keyword. This keyword provides a way to define variables that
+                can hold values of different data types. By default, when you
+                declare a variable using <Code code="let" />, it is initialized
+                with a value of <Code code="0" />. Here are some examples of
+                variable declarations in Vyzon:
             </div>
+            <Separator className="mb-6" />
 
-            {/* Dynamic Typing Section */}
-            <div className="text-4xl font-bold text-brightBlue font-montserrat mb-6 underline underline-offset-4 decoration-wavy">
-                Dynamic Typing
-            </div>
+            {/* Variable Declaration Examples */}
             <div className="text-lg text-darkGray font-roboto leading-8 mb-6">
-                Vyzon supports **dynamic typing**, meaning that the data type of
-                a variable is determined automatically at runtime based on the
-                value assigned to it. This allows developers to focus on writing
-                clean, readable code without having to explicitly declare types.
-                You can freely assign different types of values to the same
-                variable throughout your code, and Vyzon will handle the rest.
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`let a; // Variable 'a' is declared and initialized with the default value of 0
+let b = 1; // Variable 'b' is declared and initialized with the value 1
+let c = 'Hello, World!'; // Variable 'c' is initialized with a string`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
-                    For instance, the same variable can hold different types of
-                    values:
-                </p>
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    let a = 5; // 'a' is initialized as a number{"\n"}a =
-                    'Text'; // Now 'a' holds a string{"\n"}a = true; // 'a' now
-                    holds a boolean value
-                </pre>
-                <p className="mt-4">
-                    This dynamic typing system makes Vyzon incredibly versatile
-                    and simplifies handling different types of data within your
-                    programs. There's no need for typecasting or complex
-                    declarations—just use the <Code code="let" /> keyword, and
-                    you're ready to go.
+                    In this example, the variable <Code code="a" /> is declared
+                    without an explicit value, resulting in a default
+                    initialization of <Code code="0" />. The variable{" "}
+                    <Code code="b" /> is initialized with the value{" "}
+                    <Code code="1" />, and <Code code="c" /> holds a string
+                    value <Code code="'Hello, World!'" />.
                 </p>
             </div>
+            <Separator className="mb-6" />
 
             {/* Data Types Section */}
-            <div className="text-4xl font-bold text-brightBlue font-montserrat mb-6 underline underline-offset-4 decoration-wavy">
-                Data Types
+            <div className="text-4xl font-bold text-brightBlue font-montserrat mb-6 ">
+                Data Types in Vyzon
             </div>
             <div className="text-lg text-darkGray font-roboto leading-8 mb-6">
-                Although Vyzon uses dynamic typing, it supports a wide range of
-                commonly used data types, giving you the power to handle various
-                types of data effectively. The most common data types in Vyzon
-                include:
-                <ul className="list-disc list-inside my-4">
-                    <li>
-                        <strong>Strings</strong>: Used to represent sequences of
-                        characters, enclosed in single or double quotes.
-                    </li>
-                    <li>
-                        <strong>Numbers</strong>: Can be integers or
-                        floating-point numbers, used for calculations and
-                        numeric data.
-                    </li>
-                    <li>
-                        <strong>Booleans</strong>: Represent logical values,{" "}
-                        <Code code="true" /> or <Code code="false" />.
-                    </li>
-                    <li>
-                        <strong>Null</strong>: Represents an intentional absence
-                        of any object value, used to indicate that a variable
-                        holds no meaningful data.
-                    </li>
-                </ul>
-                <p className="mt-4">
-                    Here are some examples of different data types in action:
-                </p>
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    let a = 'Hello, World!'; // String type{"\n"}
-                    let b = 10; // Number type{"\n"}
-                    let c = b + (10 * 3); // Number type with a mathematical
-                    expression{"\n"}
-                    let d = "Ok!"; // String type{"\n"}
-                    let e = null; // Null type{"\n"}
-                    let f = true; // Boolean type{"\n"}
-                    let g = false; // Boolean type
-                </pre>
+                Vyzon supports various data types, allowing you to represent a
+                wide range of values. The primary data types include:
             </div>
+            <Separator className="mb-6" />
+
+            {/* Data Types Examples */}
+            <div className="text-lg text-darkGray font-roboto leading-8 mb-6">
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`let a = 'Hello, World!'; // String
+let b = 10; // Number
+let c = 10 + (10 * 3) + a; // Arithmetic operation with string concatenation
+let d = "Ok!"; // Another String
+let e = null; // Null value
+let f = true; // Boolean true
+let g = false; // Boolean false`}
+                </SyntaxHighlighter>
+                <p className="mt-4">
+                    In this example, various data types are demonstrated:
+                    <ul className="list-disc list-inside">
+                        <li>
+                            <strong>String:</strong> <Code code="a" /> is
+                            initialized with a string value.
+                        </li>
+                        <li>
+                            <strong>Number:</strong> <Code code="b" /> is
+                            assigned a numeric value.
+                        </li>
+                        <li>
+                            <strong>Arithmetic Operations:</strong>{" "}
+                            <Code code="c" /> demonstrates an arithmetic
+                            operation combined with string concatenation.
+                        </li>
+                        <li>
+                            <strong>Null:</strong> <Code code="e" /> is
+                            explicitly set to <Code code="null" />.
+                        </li>
+                        <li>
+                            <strong>Boolean:</strong> <Code code="f" /> and{" "}
+                            <Code code="g" /> are initialized with boolean
+                            values <Code code="true" /> and{" "}
+                            <Code code="false" /> respectively.
+                        </li>
+                    </ul>
+                </p>
+            </div>
+            <Separator className="mb-6" />
 
             {/* Summary Section */}
-            <div className="text-4xl font-bold text-emeraldGreen font-montserrat mb-6 underline underline-offset-4 decoration-wavy">
+            <div className="text-4xl font-bold text-emeraldGreen font-montserrat mb-6 ">
                 Summary
             </div>
             <div className="text-lg text-darkGray font-roboto leading-8">
-                Vyzon's simple, dynamic approach to variables and data types
-                makes it a flexible and developer-friendly language. By allowing
-                variables to change types dynamically and offering robust
-                support for common data types, Vyzon enables developers to write
-                clean, efficient code with minimal effort.
+                Understanding variable declarations and data types is crucial
+                for effective programming in Vyzon. By using the{" "}
+                <Code code="let" /> keyword, you can create variables that hold
+                different types of values, from strings and numbers to booleans
+                and nulls. This flexibility allows you to manage data
+                effectively, enabling you to write dynamic and responsive code.
             </div>
         </div>
     );
