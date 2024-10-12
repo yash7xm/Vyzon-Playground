@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
     ResizableHandle,
     ResizablePanel,
@@ -10,35 +10,38 @@ import HelperButtons from "./helper-btns";
 import { runCode } from "@/language";
 
 export function PlaygroundResizable() {
-    const [code, setCode] = useState<string>(
-        `// Welcome to Vyzon Playground! \nlet a = "Hello, World!";\nwrite(a);`
-    );
+    const startingCode = `// Welcome to Vyzon Playground! \nlet a = "Hello, World!";\nwrite(a);`;
+    const [code, setCode] = useState<string>(startingCode);
     const [output, setOutput] = useState<string>("");
+    const resultRef = useRef<HTMLDivElement>(null);
 
-    // Save original console.log
-    const originalConsoleLog = console.log;
-
-    // Override console.log to store logs in output
-    console.log = (...args: any[]) => {
-        const logOutput = args.join(" "); // Convert log arguments to a string
-        setOutput(logOutput); // Append to existing output
-        originalConsoleLog(...args); // Optional: Keep logging to the console as well
+    const customLogger = {
+        log: (message: any) => {
+            setOutput((prevOutput) => prevOutput + message + "\n");
+        },
     };
 
+    useEffect(() => {
+        const originalConsoleLog = console.log;
+        console.log = customLogger.log;
+
+        return () => {
+            console.log = originalConsoleLog;
+        };
+    }, []);
+
     const handleRunCode = () => {
+        setOutput("");
         try {
             runCode(code);
         } catch (error) {
             setOutput((prevOutput) => prevOutput + `Error: ${error}\n`);
         }
-    };
 
-    // Cleanup the overridden console.log when the component unmounts
-    useEffect(() => {
-        return () => {
-            console.log = originalConsoleLog; // Restore original console.log
-        };
-    }, []);
+        if (resultRef.current) {
+            resultRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    };
 
     return (
         <ResizablePanelGroup
@@ -55,7 +58,7 @@ export function PlaygroundResizable() {
                 <ResizablePanelGroup direction="vertical">
                     <ResizablePanel defaultSize={90}>
                         <div className="flex h-full p-6 overflow-y-auto">
-                            <div>{output}</div>
+                            <div ref={resultRef}>{output}</div>{" "}
                         </div>
                     </ResizablePanel>
                     <ResizableHandle />
