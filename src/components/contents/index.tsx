@@ -14,6 +14,7 @@ function Content() {
         ),
         buildins: React.lazy(() => import("../sections/build-ins")),
         conditionals: React.lazy(() => import("../sections/conditionals")),
+        loops: React.lazy(() => import("../sections/loops")),
         documentation: React.lazy(() => import("../sections/documentation")),
         modules: React.lazy(() => import("../sections/modules")),
     };
