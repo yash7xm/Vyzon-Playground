@@ -8,7 +8,7 @@ function Playground() {
                 <Navbar />
             </div>
 
-            <div className="w-full h-full">
+            <div className="w-full h-full overflow-hidden">
                 <PlaygroundResizable />
             </div>
         </div>

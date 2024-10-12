@@ -4,6 +4,8 @@ import {
     ResizablePanelGroup,
 } from "@/components/ui/resizable";
 
+import CodeEditor from "./code-editor";
+
 export function PlaygroundResizable() {
     return (
         <ResizablePanelGroup
@@ -11,8 +13,8 @@ export function PlaygroundResizable() {
             className="w-full rounded-lg border"
         >
             <ResizablePanel defaultSize={70}>
-                <div className="flex h-[200px] items-center justify-center p-6">
-                    <span className="font-semibold">One</span>
+                <div className="flex h-full w-full items-center justify-center p-6">
+                    <CodeEditor />
                 </div>
             </ResizablePanel>
             <ResizableHandle />
