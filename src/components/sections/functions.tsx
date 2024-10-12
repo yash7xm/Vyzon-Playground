@@ -1,5 +1,7 @@
 import Code from "../utils/code";
 import { Separator } from "../ui/separator";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const FunctionsContent = () => {
     return (
@@ -29,11 +31,15 @@ const FunctionsContent = () => {
                 curly braces. The function body contains the code that will be
                 executed when the function is called. Here's an example of a
                 function that takes a parameter and prints a greeting message:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    def greet(name) &#123;{"\n"}
-                    {"  "}write("Hello, " + name + "!");{"\n"}
-                    &#125;
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`def greet(name) { 
+  write("Hello, " + name + "!");
+}`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, the function <Code code="greet" /> takes
                     one parameter <Code code="name" /> and uses it to construct
@@ -55,10 +61,13 @@ const FunctionsContent = () => {
                 parentheses. If the function has parameters, you pass the
                 corresponding arguments inside the parentheses. Here's how to
                 call the <Code code="greet" /> function we declared earlier:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    greet("Yash"); // Calls the greet function with "Yash" as an
-                    argument
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`greet("Yash"); // Calls the greet function with "Yash" as an argument`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, the function <Code code="greet" /> is
                     called with the argument <Code code="Yash" />, which is
@@ -80,13 +89,18 @@ const FunctionsContent = () => {
                 storing it in a variable or using it in a calculation. Here's an
                 example of a function that adds two numbers and returns the
                 result:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    def add(a, b) &#123;{"\n"}
-                    {"  "}return a + b;{"\n"}
-                    &#125;{"\n\n"}
-                    let result = add(5, 3);{"\n"}
-                    write("The result is: ", result);
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`def add(a, b) { 
+  return a + b; 
+}
+
+let result = add(5, 3); 
+write("The result is: ", result);`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, the function <Code code="add" /> takes two
                     parameters, <Code code="a" /> and <Code code="b" />, adds
@@ -108,14 +122,17 @@ const FunctionsContent = () => {
                 to perform operations on several inputs. Here's an example of a
                 function that takes two parameters and prints a personalized
                 message:
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    def personalizedGreet(name, age) &#123;{"\n"}
-                    {"  "}write("Hello, " + name + "! You are " + age + " years
-                    old.");{"\n"}
-                    &#125;{"\n\n"}
-                    personalizedGreet("Yash", 21); // Calls the function with
-                    name "Yash" and age 21
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`def personalizedGreet(name, age) { 
+  write("Hello, " + name + "! You are " + age + " years old."); 
+}
+
+personalizedGreet("Yash", 21); // Calls the function with name "Yash" and age 21`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, the function{" "}
                     <Code code="personalizedGreet" /> takes two parameters:{" "}
