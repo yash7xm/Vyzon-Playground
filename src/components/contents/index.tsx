@@ -13,6 +13,7 @@ function Content() {
             () => import("../sections/variables-and-datatypes")
         ),
         buildins: React.lazy(() => import("../sections/build-ins")),
+        conditionals: React.lazy(() => import("../sections/conditionals")),
         documentation: React.lazy(() => import("../sections/documentation")),
         modules: React.lazy(() => import("../sections/modules")),
     };

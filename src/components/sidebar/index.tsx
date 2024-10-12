@@ -9,6 +9,7 @@ function Sidebar() {
         "Usage",
         "Variables and DataTypes",
         "Build Ins",
+        "Conditionals",
         "Modules",
         "Documentation",
     ];
