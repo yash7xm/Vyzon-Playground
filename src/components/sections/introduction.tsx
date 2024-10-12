@@ -1,4 +1,6 @@
 import { Separator } from "../ui/separator";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const IntroductionContent = () => {
     return (
@@ -85,6 +87,32 @@ const IntroductionContent = () => {
                         </li>
                     </ul>
                 </div>
+            </div>
+
+            <Separator className="my-4" />
+
+            {/* Code Example Section */}
+            <div className="mb-6">
+                <div className="text-2xl font-bold text-brightBlue font-roboto mb-4">
+                    Code Example:
+                </div>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`def factorial(n) {
+    if (n <= 1) {
+        return 1;
+    }
+    else {
+        return n * factorial(n - 1);
+    }
+}
+
+let result = factorial(5);
+write(result);`}
+                </SyntaxHighlighter>
             </div>
 
             <Separator className="my-4" />
