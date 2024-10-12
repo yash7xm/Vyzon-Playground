@@ -10,7 +10,21 @@ import HelperButtons from "./helper-btns";
 import { runCode } from "@/language";
 
 export function PlaygroundResizable() {
-    const startingCode = `// Welcome to Vyzon Playground! \nlet a = "Hello, World!";\nwrite(a);`;
+    const startingCode = `// Welcome to Vyzon Playground!
+
+class Person {
+  def constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  def greet() {
+    write("Hello, my name is " + this.name + " and I am " + this.age + " years old.");
+  }
+}
+
+let person1 = new Person("Yash", 22);
+person1.greet();`;
     const [code, setCode] = useState<string>(startingCode);
     const [output, setOutput] = useState<string>("");
     const resultRef = useRef<HTMLDivElement>(null);
@@ -53,16 +67,16 @@ export function PlaygroundResizable() {
                     <CodeEditor code={code} setCode={setCode} />
                 </div>
             </ResizablePanel>
-            <ResizableHandle />
+            <ResizableHandle withHandle />
             <ResizablePanel defaultSize={30}>
                 <ResizablePanelGroup direction="vertical">
-                    <ResizablePanel defaultSize={90}>
+                    <ResizablePanel defaultSize={85}>
                         <div className="flex h-full p-6 overflow-y-auto">
                             <div ref={resultRef}>{output}</div>
                         </div>
                     </ResizablePanel>
-                    <ResizableHandle />
-                    <ResizablePanel defaultSize={10}>
+                    <ResizableHandle withHandle />
+                    <ResizablePanel defaultSize={15}>
                         <div className="flex h-full items-center justify-center">
                             <HelperButtons
                                 runCode={handleRunCode}

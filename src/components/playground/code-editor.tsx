@@ -57,7 +57,14 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, setCode }) => {
             language="vyzon"
             value={code}
             onChange={(newValue) => setCode(newValue ?? "")}
-            options={{ minimap: { enabled: false } }}
+            options={{
+                minimap: { enabled: false },
+                scrollBeyondLastLine: false,
+                scrollbar: {
+                    vertical: "hidden",
+                    horizontal: "hidden",
+                },
+            }}
         />
     );
 };
