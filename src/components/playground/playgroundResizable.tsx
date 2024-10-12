@@ -58,13 +58,16 @@ export function PlaygroundResizable() {
                 <ResizablePanelGroup direction="vertical">
                     <ResizablePanel defaultSize={90}>
                         <div className="flex h-full p-6 overflow-y-auto">
-                            <div ref={resultRef}>{output}</div>{" "}
+                            <div ref={resultRef}>{output}</div>
                         </div>
                     </ResizablePanel>
                     <ResizableHandle />
                     <ResizablePanel defaultSize={10}>
                         <div className="flex h-full items-center justify-center">
-                            <HelperButtons runCode={handleRunCode} />
+                            <HelperButtons
+                                runCode={handleRunCode}
+                                code={code}
+                            />
                         </div>
                     </ResizablePanel>
                 </ResizablePanelGroup>

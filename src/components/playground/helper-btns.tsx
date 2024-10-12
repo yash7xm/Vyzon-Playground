@@ -2,9 +2,19 @@ import { PlayIcon, CopyIcon, DownloadIcon } from "@radix-ui/react-icons";
 
 interface HelperButtonsProps {
     runCode: () => void;
+    code: string;
 }
 
-function HelperButtons({ runCode }: HelperButtonsProps) {
+function HelperButtons({ runCode, code }: HelperButtonsProps) {
+    const handleCopy = async () => {
+        try {
+            await navigator.clipboard.writeText(code);
+            alert("Code copied to clipboard!");
+        } catch (err) {
+            console.error("Failed to copy: ", err);
+        }
+    };
+
     return (
         <div className="flex justify-around p-4 w-full">
             <button
@@ -14,7 +24,10 @@ function HelperButtons({ runCode }: HelperButtonsProps) {
                 <PlayIcon className="mr-1" />
                 Run
             </button>
-            <button className="text-sm flex items-center shadow-lg bg-purple-500 text-white rounded-md px-4 py-2 hover:bg-purple-700 transition duration-300">
+            <button
+                onClick={handleCopy}
+                className="text-sm flex items-center shadow-lg bg-purple-500 text-white rounded-md px-4 py-2 hover:bg-purple-700 transition duration-300"
+            >
                 <CopyIcon className="mr-2" />
                 Copy Code
             </button>
