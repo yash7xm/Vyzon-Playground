@@ -1,5 +1,7 @@
 import Code from "../utils/code";
 import { Separator } from "../ui/separator";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const BuiltInsConsoleOutputContent = () => {
     return (
@@ -34,13 +36,16 @@ const BuiltInsConsoleOutputContent = () => {
                     <Code code="write()" />
                     function:
                 </p>
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    let a = 'Anything';{"\n"}
-                    write(a); // Output: Anything{"\n"}
-                    write("abc"); // Output: abc{"\n"}
-                    write("write anything: ", a); // Output: write anything:
-                    Anything
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`let a = 'Anything';\n
+write(a); // Output: Anything\n
+write("abc"); // Output: abc\n
+write("write anything: ", a); // Output: write anything: Anything`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     The <Code code="write()" />
                     function is incredibly versatile. In the first example, we
@@ -71,13 +76,16 @@ const BuiltInsConsoleOutputContent = () => {
                     types of data, and Vyzon will automatically handle the
                     formatting:
                 </p>
-                <pre className="bg-gray-100 p-4 rounded-md text-darkGray font-mono text-sm mt-2">
-                    let a = 42;{"\n"}
-                    let b = 'The answer is';{"\n"}
-                    let c = true;{"\n"}
-                    write(b + " " + a + " " + c); // Output: The answer is 42
-                    true
-                </pre>
+                <SyntaxHighlighter
+                    language="javascript"
+                    style={oneLight}
+                    className="mt-2 shadow-lg rounded-lg"
+                >
+                    {`let a = 42;\n
+let b = 'The answer is';\n
+let c = true;\n
+write(b + " " + a + " " + c); // Output: The answer is 42 true`}
+                </SyntaxHighlighter>
                 <p className="mt-4">
                     In this example, the string <Code code="b" />, the number{" "}
                     <Code code="a" />, and the boolean <Code code="c" /> are all
