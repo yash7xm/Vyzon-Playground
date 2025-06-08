@@ -20,7 +20,7 @@ function Home() {
             <div className="w-full flex h-full gap-8 overflow-hidden">
                 {/* Sidebar */}
                 <div
-                    className={`h-full z-40 transition-transform duration-300 md:static absolute top-[5.5rem] md:top-0 bg-white md:w-1/4 w-3/4 shadow-lg md:shadow-none transform ${
+                    className={`h-full z-40 transition-transform duration-300 md:static absolute top-[5.5rem] md:top-0 bg-white md:w-full w-3/4 shadow-lg md:shadow-none transform ${
                         sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
                     }`}
                 >
