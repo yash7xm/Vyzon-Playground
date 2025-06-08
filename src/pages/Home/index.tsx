@@ -12,22 +12,26 @@ function Home() {
                 <Navbar toggleSidebar={() => setSidebarOpen(prev => !prev)} />
             </div>
 
-            {/* Sidebar overlay for mobile */}
+            {/* Mobile overlay */}
             {sidebarOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden" onClick={() => setSidebarOpen(false)} />
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+                    onClick={() => setSidebarOpen(false)}
+                />
             )}
 
             <div className="w-full flex h-full gap-8 overflow-hidden">
                 {/* Sidebar */}
                 <div
-                    className={`h-full z-40 transition-transform duration-300 md:static absolute top-[5.5rem] md:top-0 bg-white md:w-full w-3/4 shadow-lg md:shadow-none transform ${
-                        sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-                    }`}
+                    className={`h-full rounded-md bg-white shadow-lg md:shadow-none z-40 transition-transform duration-300 ease-in-out
+                        md:static md:translate-x-0 absolute left-0 w-2/3 md:w-1/4
+                        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+                    `}
                 >
-                    <Sidebar />
+                    <Sidebar closeSidebar={() => setSidebarOpen(false)} />
                 </div>
 
-                {/* Main content */}
+                {/* Main Content */}
                 <div className="w-full md:w-3/4 h-full">
                     <Content />
                 </div>
