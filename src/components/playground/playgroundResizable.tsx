@@ -25,22 +25,23 @@ class Person {
 
 let person1 = new Person("Yash", 22);
 person1.greet();`;
+
     const [code, setCode] = useState<string>(startingCode);
     const [output, setOutput] = useState<string>("");
+    const [fullScreen, setFullScreen] = useState<boolean>(false);
     const resultRef = useRef<HTMLDivElement>(null);
 
     const customLogger = {
         log: (message: any) => {
-            setOutput((prevOutput) => prevOutput + message + "\n");
+            setOutput((prev) => prev + message + "\n");
         },
     };
 
     useEffect(() => {
-        const originalConsoleLog = console.log;
+        const original = console.log;
         console.log = customLogger.log;
-
         return () => {
-            console.log = originalConsoleLog;
+            console.log = original;
         };
     }, []);
 
@@ -48,8 +49,8 @@ person1.greet();`;
         setOutput("");
         try {
             runCode(code);
-        } catch (error) {
-            setOutput((prevOutput) => prevOutput + `Error: ${error}\n`);
+        } catch (e) {
+            setOutput((prev) => prev + `Error: ${e}\n`);
         }
 
         if (resultRef.current) {
@@ -58,34 +59,54 @@ person1.greet();`;
     };
 
     return (
-        <ResizablePanelGroup
-            direction="horizontal"
-            className="w-full rounded-lg border"
-        >
-            <ResizablePanel defaultSize={70}>
-                <div className="flex h-full w-full items-center justify-center p-6">
+        <div className="w-full h-full p-2 md:p-4">
+            {fullScreen ? (
+                // FULL SCREEN MODE
+                <div className="h-full w-full border rounded-lg">
                     <CodeEditor code={code} setCode={setCode} />
+                    <div className="absolute top-4 right-4 z-10">
+                        <button
+                            onClick={() => setFullScreen(false)}
+                            className="text-sm px-3 py-1 bg-purple-600 text-white rounded-md shadow hover:bg-purple-700"
+                        >
+                            Exit Full Screen
+                        </button>
+                    </div>
                 </div>
-            </ResizablePanel>
-            <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={30}>
-                <ResizablePanelGroup direction="vertical">
-                    <ResizablePanel defaultSize={85}>
-                        <div className="flex h-full p-6 overflow-y-auto">
-                            <div ref={resultRef}>{output}</div>
+            ) : (
+                // NORMAL MODE
+                <ResizablePanelGroup direction="horizontal" className="w-full h-full rounded-lg border">
+                    {/* CODE */}
+                    <ResizablePanel defaultSize={75} minSize={50}>
+                        <div className="h-full w-full p-2 md:p-4">
+                            <CodeEditor code={code} setCode={setCode} />
                         </div>
                     </ResizablePanel>
-                    <ResizableHandle withHandle />
-                    <ResizablePanel defaultSize={15}>
-                        <div className="flex h-full items-center justify-center">
+
+                    <ResizableHandle />
+
+                    {/* BUTTON PANEL */}
+                    <ResizablePanel defaultSize={5} minSize={5}>
+                        <div className="h-full flex flex-col gap-4 border-x p-2">
                             <HelperButtons
                                 runCode={handleRunCode}
                                 code={code}
+                                vertical
+                                onToggleFullScreen={() => setFullScreen(true)}
                             />
                         </div>
                     </ResizablePanel>
+
+                    <ResizableHandle />
+
+                    {/* OUTPUT */}
+                    <ResizablePanel defaultSize={20} minSize={15}>
+                        <div className="h-full w-full overflow-y-auto p-4 font-mono text-sm">
+                            <div ref={resultRef}>{output}</div>
+                        </div>
+                    </ResizablePanel>
                 </ResizablePanelGroup>
-            </ResizablePanel>
-        </ResizablePanelGroup>
+            )}
+        </div>
     );
 }

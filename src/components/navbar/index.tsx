@@ -3,7 +3,7 @@ import { CommandMenu } from "./commandMenu";
 import { Input } from "@/components/ui/input";
 import { MagnifyingGlassIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, BookOpenText, Terminal } from "lucide-react"; // Icons for docs/playground
+import { Menu, BookOpenText, Terminal } from "lucide-react"; 
 
 function Navbar({ toggleSidebar }: { toggleSidebar: () => void }) {
     const [open, setOpen] = useState(false);
@@ -22,7 +22,6 @@ function Navbar({ toggleSidebar }: { toggleSidebar: () => void }) {
                     <Menu className="w-6 h-6" />
                 </div>
 
-                {/* Vyzon Logo clickable */}
                 <div
                     onClick={() => navigate("/docs/introduction")}
                     className="cursor-pointer font-semibold text-lg"
@@ -30,7 +29,6 @@ function Navbar({ toggleSidebar }: { toggleSidebar: () => void }) {
                     Vyzon
                 </div>
 
-                {/* Search input (hidden on xs screens) */}
                 <div className="hidden sm:flex w-64 ml-4 border rounded-md items-center pl-4">
                     <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
                     <Input
@@ -41,7 +39,6 @@ function Navbar({ toggleSidebar }: { toggleSidebar: () => void }) {
                 </div>
             </div>
 
-            {/* Right section */}
             <div className="flex gap-4 items-center">
                 {/* Docs Link - responsive */}
                 <Link to="/docs/introduction">
@@ -51,7 +48,6 @@ function Navbar({ toggleSidebar }: { toggleSidebar: () => void }) {
                     </div>
                 </Link>
 
-                {/* Playground Link - responsive */}
                 <Link to="/playground">
                     <div className="cursor-pointer text-sm hover:underline flex items-center gap-1">
                         <span className="hidden md:inline">Playground</span>
@@ -59,7 +55,6 @@ function Navbar({ toggleSidebar }: { toggleSidebar: () => void }) {
                     </div>
                 </Link>
 
-                {/* GitHub Link */}
                 <a
                     href="https://github.com/yash7xm/Vyzon"
                     target="_blank"
@@ -70,7 +65,6 @@ function Navbar({ toggleSidebar }: { toggleSidebar: () => void }) {
                 </a>
             </div>
 
-            {/* Command Menu */}
             {open && <CommandMenu open={open} setOpen={setOpen} />}
         </div>
     );

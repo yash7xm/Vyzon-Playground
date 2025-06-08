@@ -1,18 +1,19 @@
-import { PlayIcon, CopyIcon, DownloadIcon } from "@radix-ui/react-icons";
+import { Play, Copy, FileDown, Maximize } from "lucide-react";
 import { toast } from "sonner";
 
 interface HelperButtonsProps {
     runCode: () => void;
     code: string;
+    vertical?: boolean;
+    onToggleFullScreen?: () => void;
 }
 
-function HelperButtons({ runCode, code }: HelperButtonsProps) {
+function HelperButtons({ runCode, code, vertical = false, onToggleFullScreen }: HelperButtonsProps) {
     const handleCopy = async () => {
         try {
             await navigator.clipboard.writeText(code);
             toast.success("Code copied to clipboard!");
         } catch (err) {
-            console.error("Failed to copy: ", err);
             toast.error("Failed to copy code.");
         }
     };
@@ -23,36 +24,32 @@ function HelperButtons({ runCode, code }: HelperButtonsProps) {
         const a = document.createElement("a");
         a.href = url;
         a.download = "code.txt";
-        document.body.appendChild(a);
         a.click();
-        document.body.removeChild(a);
         URL.revokeObjectURL(url);
         toast.success("Code downloaded!");
     };
 
+    const baseClasses =
+        "text-sm flex justify-center gap-2 text-white px-4 py-2 transition w-full";
+
     return (
-        <div className="flex justify-around p-4 w-full">
-            <button
-                onClick={runCode}
-                className="text-sm flex items-center shadow-lg bg-purple-500 text-white rounded-md px-4 py-2 hover:bg-purple-700 transition duration-300"
-            >
-                <PlayIcon className="mr-1" />
-                Run
+        <div
+            className={`flex ${vertical ? "flex-col gap-4" : "flex-row gap-3"} w-full`}
+        >
+            <button onClick={runCode} className={baseClasses}>
+                <Play stroke="#1c1c1c"/>
             </button>
-            <button
-                onClick={handleCopy}
-                className="text-sm flex items-center shadow-lg bg-purple-500 text-white rounded-md px-4 py-2 hover:bg-purple-700 transition duration-300"
-            >
-                <CopyIcon className="mr-2" />
-                Copy Code
+            <button onClick={handleCopy} className={baseClasses}>
+                <Copy stroke="#1c1c1c"/>
             </button>
-            <button
-                onClick={handleDownload}
-                className="text-sm flex items-center shadow-lg bg-purple-500 text-white rounded-md px-4 py-2 hover:bg-purple-700 transition duration-300"
-            >
-                <DownloadIcon className="mr-2" />
-                Download
+            <button onClick={handleDownload} className={baseClasses}>
+               <FileDown stroke="#1c1c1c"/>
             </button>
+            {onToggleFullScreen && (
+                <button onClick={onToggleFullScreen} className={baseClasses}>
+                    <Maximize stroke="#1c1c1c"/>
+                </button>
+            )}
         </div>
     );
 }
