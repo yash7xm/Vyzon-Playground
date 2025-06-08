@@ -29,25 +29,27 @@ function HelperButtons({ runCode, code, vertical = false, onToggleFullScreen }: 
         toast.success("Code downloaded!");
     };
 
-    const baseClasses =
-        "text-sm flex justify-center gap-2 text-white px-4 py-2 transition w-full";
+    const buttonClass =
+        "flex items-center justify-center p-2 rounded-md hover:bg-gray-100 transition";
 
     return (
         <div
-            className={`flex ${vertical ? "flex-col gap-4" : "flex-row gap-3"} w-full`}
+            className={`flex ${
+                vertical ? "flex-col gap-4" : "flex-row gap-3"
+            } items-center justify-center w-full`}
         >
-            <button onClick={runCode} className={baseClasses}>
-                <Play stroke="#1c1c1c"/>
+            <button onClick={runCode} className={buttonClass} title="Run Code">
+                <Play size={18} stroke="#1c1c1c" />
             </button>
-            <button onClick={handleCopy} className={baseClasses}>
-                <Copy stroke="#1c1c1c"/>
+            <button onClick={handleCopy} className={buttonClass} title="Copy Code">
+                <Copy size={18} stroke="#1c1c1c" />
             </button>
-            <button onClick={handleDownload} className={baseClasses}>
-               <FileDown stroke="#1c1c1c"/>
+            <button onClick={handleDownload} className={buttonClass} title="Download Code">
+                <FileDown size={18} stroke="#1c1c1c" />
             </button>
             {onToggleFullScreen && (
-                <button onClick={onToggleFullScreen} className={baseClasses}>
-                    <Maximize stroke="#1c1c1c"/>
+                <button onClick={onToggleFullScreen} className={buttonClass} title="Full Screen">
+                    <Maximize size={18} stroke="#1c1c1c" />
                 </button>
             )}
         </div>
