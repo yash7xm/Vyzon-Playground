@@ -7,7 +7,11 @@ import {
 
 import CodeEditor from "./code-editor";
 import HelperButtons from "./helper-btns";
-import { formatVyzonError } from "@/language/errors";
+import {
+    formatVyzonError,
+    getErrorLocation,
+    SourceLocation,
+} from "@/language/errors";
 import { runCode } from "@/language";
 
 export function PlaygroundResizable() {
@@ -30,6 +34,10 @@ person1.greet();`;
     const [code, setCode] = useState<string>(startingCode);
     const [output, setOutput] = useState<string>("");
     const [fullScreen, setFullScreen] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string | undefined>();
+    const [errorLocation, setErrorLocation] = useState<
+        SourceLocation | undefined
+    >();
     const resultRef = useRef<HTMLDivElement>(null);
 
     const customLogger = {
@@ -46,12 +54,22 @@ person1.greet();`;
         };
     }, []);
 
+    useEffect(() => {
+        setErrorMessage(undefined);
+        setErrorLocation(undefined);
+    }, [code]);
+
     const handleRunCode = () => {
         setOutput("");
+        setErrorMessage(undefined);
+        setErrorLocation(undefined);
         try {
             runCode(code);
         } catch (e) {
-            setOutput((prev) => prev + `${formatVyzonError(e)}\n`);
+            const formattedError = formatVyzonError(e);
+            setErrorMessage(formattedError);
+            setErrorLocation(getErrorLocation(e));
+            setOutput((prev) => prev + `${formattedError}\n`);
         }
 
         if (resultRef.current) {
@@ -64,7 +82,12 @@ person1.greet();`;
             {fullScreen ? (
                 // FULL SCREEN MODE
                 <div className="h-full w-full border rounded-lg relative">
-                    <CodeEditor code={code} setCode={setCode} />
+                    <CodeEditor
+                        code={code}
+                        setCode={setCode}
+                        errorLocation={errorLocation}
+                        errorMessage={errorMessage}
+                    />
                     <div className="absolute top-4 right-4 z-10">
                         <button
                             onClick={() => setFullScreen(false)}
@@ -79,7 +102,12 @@ person1.greet();`;
                     {/* Mobile layout: vertical stacked */}
                     <div className="flex flex-col md:hidden h-[calc(100vh-2rem)] w-full">
                         <div className="h-[70%] min-h-0 border rounded-t-lg overflow-hidden">
-                            <CodeEditor code={code} setCode={setCode} />
+                            <CodeEditor
+                                code={code}
+                                setCode={setCode}
+                                errorLocation={errorLocation}
+                                errorMessage={errorMessage}
+                            />
                         </div>
 
                         <div className="h-[5%] min-h-0 flex items-center justify-center border-y px-2">
@@ -105,7 +133,12 @@ person1.greet();`;
                             {/* CODE */}
                             <ResizablePanel defaultSize={75} minSize={50}>
                                 <div className="h-full w-full p-2 md:p-4">
-                                    <CodeEditor code={code} setCode={setCode} />
+                                    <CodeEditor
+                                        code={code}
+                                        setCode={setCode}
+                                        errorLocation={errorLocation}
+                                        errorMessage={errorMessage}
+                                    />
                                 </div>
                             </ResizablePanel>
 

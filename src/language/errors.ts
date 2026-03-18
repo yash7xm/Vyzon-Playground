@@ -55,3 +55,11 @@ export function formatVyzonError(error: unknown): string {
 
     return String(error);
 }
+
+export function getErrorLocation(error: unknown): SourceLocation | undefined {
+    if (error instanceof VyzonError) {
+        return error.loc;
+    }
+
+    return undefined;
+}
