@@ -1,4 +1,5 @@
 import Environment from "./Environment";
+import { NodeWithLocation, VyzonError } from "./errors";
 import { Parser } from "./parser/Parser";
 
 const bundledModuleSources = import.meta.glob("./modules/*.vy", {
@@ -43,7 +44,19 @@ class Interpreter {
     }
 
     interpret(node: any): any {
-        return this.StatementList(node);
+        try {
+            return this.StatementList(node);
+        } catch (error) {
+            if (error instanceof VyzonError) {
+                throw error;
+            }
+
+            if (error instanceof Error) {
+                throw new VyzonError("RuntimeError", error.message, undefined, error);
+            }
+
+            throw new VyzonError("RuntimeError", String(error));
+        }
     }
 
     StatementList(body: any[], env: Environment = this.global): any {
@@ -58,32 +71,34 @@ class Interpreter {
     }
 
     Statement(node: any, env: Environment): any {
-        switch (node.type) {
-            case "ExpressionStatement":
-                return this.ExpressionStatement(node.expression, env);
-            case "VariableStatement":
-                return this.VariableStatement(node.declarations, env);
-            case "BlockStatement":
-                return this.BlockStatement(node.body, env);
-            case "IfStatement":
-                return this.IfStatement(node, env);
-            case "WhileStatement":
-                return this.WhileStatement(node, env);
-            case "DoWhileStatement":
-                return this.DoWhileStatement(node, env);
-            case "ForStatement":
-                return this.ForStatement(node, env);
-            case "FunctionDeclaration":
-                return this.FunctionDeclaration(node, env);
-            case "ReturnStatement":
-                return this.ReturnStatement(node, env);
-            case "ClassDeclaration":
-                return this.ClassDeclaration(node, env);
-            case "ModuleDeclaration":
-                return this.ModuleDeclaration(node, env);
-            case "ImportStatement":
-                return this.ImportStatement(node);
-        }
+        return this.withRuntimeError(node, () => {
+            switch (node.type) {
+                case "ExpressionStatement":
+                    return this.ExpressionStatement(node.expression, env);
+                case "VariableStatement":
+                    return this.VariableStatement(node.declarations, env);
+                case "BlockStatement":
+                    return this.BlockStatement(node.body, env);
+                case "IfStatement":
+                    return this.IfStatement(node, env);
+                case "WhileStatement":
+                    return this.WhileStatement(node, env);
+                case "DoWhileStatement":
+                    return this.DoWhileStatement(node, env);
+                case "ForStatement":
+                    return this.ForStatement(node, env);
+                case "FunctionDeclaration":
+                    return this.FunctionDeclaration(node, env);
+                case "ReturnStatement":
+                    return this.ReturnStatement(node, env);
+                case "ClassDeclaration":
+                    return this.ClassDeclaration(node, env);
+                case "ModuleDeclaration":
+                    return this.ModuleDeclaration(node, env);
+                case "ImportStatement":
+                    return this.ImportStatement(node);
+            }
+        });
     }
 
     ImportStatement(node: any): void {
@@ -92,15 +107,27 @@ class Interpreter {
         const code = getBundledModuleSource(moduleName);
 
         if (!code) {
-            console.error(`Error: Module '${moduleName}' not found.`);
-            return;
+            throw new VyzonError(
+                "RuntimeError",
+                `Module "${moduleName}" not found`,
+                node.loc
+            );
         }
 
         try {
             const ast = parser.parse(code);
             this.interpret(ast.body);
         } catch (readErr) {
-            console.error(`Error reading module '${moduleName}':`, readErr);
+            if (readErr instanceof VyzonError) {
+                throw readErr;
+            }
+
+            throw new VyzonError(
+                "RuntimeError",
+                `Failed to load module "${moduleName}"`,
+                node.loc,
+                readErr
+            );
         }
     }
 
@@ -230,38 +257,40 @@ class Interpreter {
     }
 
     Expression(node: any, env: Environment): any {
-        switch (node.type) {
-            case "NumericLiteral":
-                return this.NumericLiteral(node);
-            case "StringLiteral":
-                return this.StringLiteral(node);
-            case "BooleanLiteral":
-                return this.BooleanLiteral(node);
-            case "NullLiteral":
-                return this.NullLiteral(node);
-            case "Identifier":
-                return this.Identifier(node, env);
-            case "LogicalORExpression":
-                return this.LogicalORExpression(node, env);
-            case "LogicalANDExpression":
-                return this.LogicalANDExpression(node, env);
-            case "UnaryExpression":
-                return this.UnaryExpression(node, env);
-            case "AssignmentExpression":
-                return this.AssignmentExpression(node, env);
-            case "ConditionalExpression":
-                return this.ConditionalExpression(node, env);
-            case "MemberExpression":
-                return this.MemberExpression(node, env);
-            case "BinaryExpression":
-                return this.BinaryExpression(node, env);
-            case "CallExpression":
-                return this.CallExpression(node, env);
-            case "NewExpression":
-                return this.NewExpression(node, env);
-            case "ThisExpression":
-                return this.ThisExpression(env);
-        }
+        return this.withRuntimeError(node, () => {
+            switch (node.type) {
+                case "NumericLiteral":
+                    return this.NumericLiteral(node);
+                case "StringLiteral":
+                    return this.StringLiteral(node);
+                case "BooleanLiteral":
+                    return this.BooleanLiteral(node);
+                case "NullLiteral":
+                    return this.NullLiteral(node);
+                case "Identifier":
+                    return this.Identifier(node, env);
+                case "LogicalORExpression":
+                    return this.LogicalORExpression(node, env);
+                case "LogicalANDExpression":
+                    return this.LogicalANDExpression(node, env);
+                case "UnaryExpression":
+                    return this.UnaryExpression(node, env);
+                case "AssignmentExpression":
+                    return this.AssignmentExpression(node, env);
+                case "ConditionalExpression":
+                    return this.ConditionalExpression(node, env);
+                case "MemberExpression":
+                    return this.MemberExpression(node, env);
+                case "BinaryExpression":
+                    return this.BinaryExpression(node, env);
+                case "CallExpression":
+                    return this.CallExpression(node, env);
+                case "NewExpression":
+                    return this.NewExpression(node, env);
+                case "ThisExpression":
+                    return this.ThisExpression(env);
+            }
+        });
     }
 
     ThisExpression(env: Environment): any {
@@ -543,7 +572,11 @@ class Interpreter {
             typeof leftValue === "string" &&
             operator !== "+"
         ) {
-            throw new SyntaxError("Invalid operation");
+            throw new VyzonError(
+                "RuntimeError",
+                `Invalid operation "${node.operator}" for string values`,
+                node.loc
+            );
         }
 
         switch (operator) {
@@ -583,6 +616,43 @@ class Interpreter {
 
     NullLiteral(node: any): null {
         return node.value;
+    }
+
+    private withRuntimeError<T>(
+        node: NodeWithLocation | undefined,
+        operation: () => T
+    ): T {
+        try {
+            return operation();
+        } catch (error) {
+            if (error instanceof VyzonError) {
+                if (!error.loc && node?.loc) {
+                    throw new VyzonError(
+                        error.kind,
+                        error.message,
+                        node.loc,
+                        error.cause ?? error
+                    );
+                }
+
+                throw error;
+            }
+
+            if (error instanceof Error) {
+                throw new VyzonError(
+                    "RuntimeError",
+                    error.message,
+                    node?.loc,
+                    error
+                );
+            }
+
+            throw new VyzonError(
+                "RuntimeError",
+                String(error),
+                node?.loc
+            );
+        }
     }
 }
 

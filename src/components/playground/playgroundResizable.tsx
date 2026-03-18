@@ -7,6 +7,7 @@ import {
 
 import CodeEditor from "./code-editor";
 import HelperButtons from "./helper-btns";
+import { formatVyzonError } from "@/language/errors";
 import { runCode } from "@/language";
 
 export function PlaygroundResizable() {
@@ -50,7 +51,7 @@ person1.greet();`;
         try {
             runCode(code);
         } catch (e) {
-            setOutput((prev) => prev + `Error: ${e}\n`);
+            setOutput((prev) => prev + `${formatVyzonError(e)}\n`);
         }
 
         if (resultRef.current) {

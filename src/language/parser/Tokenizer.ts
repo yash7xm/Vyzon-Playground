@@ -1,3 +1,5 @@
+import { SourceLocation, SourcePosition, VyzonError } from "../errors";
+
 type TokenSpec = [RegExp, string | null][];
 
 const Spec: TokenSpec = [
@@ -99,15 +101,27 @@ const Spec: TokenSpec = [
 interface Token {
     type: string;
     value: string;
+    loc: SourceLocation;
 }
 
 class Tokenizer {
-    private _string: any;
-    private _cursor: any;
+    private _string: string;
+    private _cursor: number;
+    private _line: number;
+    private _column: number;
+
+    constructor() {
+        this._string = "";
+        this._cursor = 0;
+        this._line = 1;
+        this._column = 1;
+    }
 
     init(string: string): void {
         this._string = string;
         this._cursor = 0;
+        this._line = 1;
+        this._column = 1;
     }
 
     isEOF(): boolean {
@@ -122,6 +136,7 @@ class Tokenizer {
         if (!this.hasMoreTokens()) return null;
 
         const string = this._string.slice(this._cursor);
+        const start = this._currentPosition();
 
         for (const [regexp, tokenType] of Spec) {
             const tokenValue = this._match(regexp, string);
@@ -135,10 +150,21 @@ class Tokenizer {
             return {
                 type: tokenType,
                 value: tokenValue,
+                loc: {
+                    start,
+                    end: this._currentPosition(),
+                },
             };
         }
 
-        return null;
+        throw new VyzonError(
+            "SyntaxError",
+            `Unexpected token "${string[0]}"`,
+            {
+                start,
+                end: start,
+            }
+        );
     }
 
     private _match(regexp: RegExp, string: string): string | null {
@@ -146,10 +172,32 @@ class Tokenizer {
 
         if (matched == null) return null;
 
-        this._cursor += matched[0].length;
+        this._advancePosition(matched[0]);
 
         return matched[0];
     }
+
+    private _currentPosition(): SourcePosition {
+        return {
+            line: this._line,
+            column: this._column,
+            offset: this._cursor,
+        };
+    }
+
+    private _advancePosition(value: string): void {
+        for (const char of value) {
+            this._cursor += 1;
+
+            if (char === "\n") {
+                this._line += 1;
+                this._column = 1;
+            } else {
+                this._column += 1;
+            }
+        }
+    }
 }
 
+export type { Token };
 export { Tokenizer };
