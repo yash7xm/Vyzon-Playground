@@ -18,6 +18,10 @@
         "noEmit": true,
         "jsx": "react-jsx",
 
+        /* Vite types + JSON imports */
+        "types": ["vite/client"],
+        "resolveJsonModule": true,
+
         /* Linting */
         "strict": true,
         "noUnusedLocals": true,
