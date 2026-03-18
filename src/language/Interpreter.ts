@@ -15,7 +15,7 @@ function getBundledModuleSource(moduleName: string): string | null {
 class Interpreter {
     global: Environment;
 
-    constructor(global: Environment = GlobalEnvironment) {
+    constructor(global: Environment = createGlobalEnvironment()) {
         this.global = global;
     }
 
@@ -530,10 +530,12 @@ class Interpreter {
     }
 }
 
-const GlobalEnvironment = new Environment({
-    null: null,
-    true: true,
-    false: false,
-});
+function createGlobalEnvironment(): Environment {
+    return new Environment({
+        null: null,
+        true: true,
+        false: false,
+    });
+}
 
 export default Interpreter;
