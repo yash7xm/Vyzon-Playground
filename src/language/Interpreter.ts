@@ -1,6 +1,17 @@
 import Environment from "./Environment";
 import { Parser } from "./parser/Parser";
 
+const bundledModuleSources = import.meta.glob("./modules/*.vy", {
+    query: "?raw",
+    import: "default",
+    eager: true,
+}) as Record<string, string>;
+
+function getBundledModuleSource(moduleName: string): string | null {
+    const modulePath = `./modules/${moduleName}.vy`;
+    return bundledModuleSources[modulePath] ?? null;
+}
+
 class Interpreter {
     global: Environment;
 
@@ -51,37 +62,19 @@ class Interpreter {
 
     ImportStatement(node: any): void {
         const parser = new Parser();
-        const fs = require("fs");
-        const path = require("path");
-
         const moduleName = node.name.name;
+        const code = getBundledModuleSource(moduleName);
 
-        const searchDirectories = [
-            path.join(__dirname, "modules"),
-            process.cwd(),
-        ];
-
-        let fullPath: string | null = null;
-
-        for (const dir of searchDirectories) {
-            const potentialPath = path.join(dir, `${moduleName}.vy`);
-            if (fs.existsSync(potentialPath)) {
-                fullPath = potentialPath;
-                break;
-            }
-        }
-
-        if (!fullPath) {
+        if (!code) {
             console.error(`Error: Module '${moduleName}' not found.`);
             return;
         }
 
         try {
-            const code = fs.readFileSync(fullPath, "utf-8");
             const ast = parser.parse(code);
             this.interpret(ast.body);
         } catch (readErr) {
-            console.error(`Error reading ${fullPath}:`, readErr);
+            console.error(`Error reading module '${moduleName}':`, readErr);
         }
     }
 

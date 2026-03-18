@@ -7,7 +7,7 @@ function App() {
         <>
             <Routes />
             <Toaster position="top-right"/>{" "}
-            <Analytics />
+            {import.meta.env.PROD ? <Analytics /> : null}
         </>
     );
 }
