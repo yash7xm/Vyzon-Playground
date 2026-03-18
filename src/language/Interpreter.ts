@@ -12,6 +12,22 @@ function getBundledModuleSource(moduleName: string): string | null {
     return bundledModuleSources[modulePath] ?? null;
 }
 
+type ReturnSignal = {
+    type: "ReturnSignal";
+    value: any;
+};
+
+function createReturnSignal(value: any): ReturnSignal {
+    return {
+        type: "ReturnSignal",
+        value,
+    };
+}
+
+function isReturnSignal(value: any): value is ReturnSignal {
+    return value?.type === "ReturnSignal";
+}
+
 class Interpreter {
     global: Environment;
 
@@ -27,6 +43,9 @@ class Interpreter {
         let result: any;
         for (const statement of body) {
             result = this.Statement(statement, env);
+            if (isReturnSignal(result)) {
+                return result;
+            }
         }
         return result;
     }
@@ -113,7 +132,9 @@ class Interpreter {
     }
 
     ReturnStatement(node: any, env: Environment): any {
-        return this.Expression(node.argument, env);
+        const value =
+            node.argument !== null ? this.Expression(node.argument, env) : null;
+        return createReturnSignal(value);
     }
 
     ForStatement(node: any, env: Environment): any {
@@ -251,7 +272,8 @@ class Interpreter {
 
         const activationEnv = new Environment(activationRecord, method.env);
 
-        return this.Statement(method.body, activationEnv);
+        const result = this.Statement(method.body, activationEnv);
+        return isReturnSignal(result) ? result.value : result;
     }
 
     _callSuperExpression(node: any, env: Environment): any {
@@ -287,7 +309,8 @@ class Interpreter {
             constructor.env
         );
 
-        return this.Statement(constructor.body, activationEnv);
+        const result = this.Statement(constructor.body, activationEnv);
+        return isReturnSignal(result) ? result.value : result;
     }
 
     _normalCallExpression(node: any, env: Environment): any {
@@ -308,7 +331,8 @@ class Interpreter {
 
         const activationEnv = new Environment(activationRecord, fn.env);
 
-        return this.Statement(fn.body, activationEnv);
+        const result = this.Statement(fn.body, activationEnv);
+        return isReturnSignal(result) ? result.value : result;
     }
 
     _callWriteExpression(node: any, env: Environment): any {
@@ -342,7 +366,10 @@ class Interpreter {
                 constructor.env
             );
 
-            this.Statement(constructor.body, activationEnv);
+            const result = this.Statement(constructor.body, activationEnv);
+            if (isReturnSignal(result)) {
+                return instanceEnv;
+            }
         }
 
         return instanceEnv;
