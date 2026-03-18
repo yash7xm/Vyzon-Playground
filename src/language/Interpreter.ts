@@ -30,9 +30,16 @@ function isReturnSignal(value: any): value is ReturnSignal {
 
 class Interpreter {
     global: Environment;
+    private loopIterations: number;
+    private readonly maxLoopIterations: number;
 
-    constructor(global: Environment = createGlobalEnvironment()) {
+    constructor(
+        global: Environment = createGlobalEnvironment(),
+        maxLoopIterations = 100000
+    ) {
         this.global = global;
+        this.loopIterations = 0;
+        this.maxLoopIterations = maxLoopIterations;
     }
 
     interpret(node: any): any {
@@ -137,6 +144,16 @@ class Interpreter {
         return createReturnSignal(value);
     }
 
+    private guardLoopExecution(): void {
+        this.loopIterations += 1;
+
+        if (this.loopIterations > this.maxLoopIterations) {
+            throw new Error(
+                `Execution stopped: exceeded ${this.maxLoopIterations} loop iterations.`
+            );
+        }
+    }
+
     ForStatement(node: any, env: Environment): any {
         let result: any;
         for (
@@ -144,7 +161,11 @@ class Interpreter {
             this.Expression(node.test, env);
             this.Expression(node.update, env)
         ) {
+            this.guardLoopExecution();
             result = this.Statement(node.body, env);
+            if (isReturnSignal(result)) {
+                return result;
+            }
         }
 
         return result;
@@ -153,7 +174,11 @@ class Interpreter {
     DoWhileStatement(node: any, env: Environment): any {
         let result: any;
         do {
+            this.guardLoopExecution();
             result = this.Statement(node.body, env);
+            if (isReturnSignal(result)) {
+                return result;
+            }
         } while (this.Expression(node.test, env));
         return result;
     }
@@ -162,7 +187,11 @@ class Interpreter {
         let result: any;
 
         while (this.Expression(node.test, env)) {
+            this.guardLoopExecution();
             result = this.Statement(node.body, env);
+            if (isReturnSignal(result)) {
+                return result;
+            }
         }
 
         return result;
